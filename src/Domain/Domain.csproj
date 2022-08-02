@@ -1,0 +1,22 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+    <PropertyGroup>
+        <TargetFramework>net6.0</TargetFramework>
+        <ImplicitUsings>enable</ImplicitUsings>
+        <Nullable>enable</Nullable>
+    </PropertyGroup>
+
+    <ItemGroup>
+      <Folder Include="Common\Bases" />
+      <Folder Include="Common\Constants" />
+      <Folder Include="Exceptions" />
+      <Folder Include="Resources" />
+      <Folder Include="Services" />
+      <Folder Include="Validations" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.7" />
+    </ItemGroup>
+
+</Project>
