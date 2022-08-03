@@ -1,5 +1,7 @@
 using WebApi.Common.Extensions;
 
+namespace WebApi;
+
 public static class Program
 {
     public static void Main(string[] args)
@@ -22,4 +24,3 @@ public static class Program
         }
     }
 }
-

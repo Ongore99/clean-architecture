@@ -1,6 +1,6 @@
 using Domain.Common.Interfaces;
 
-namespace Domain.Entities.Account;
+namespace Domain.Entities.Accounts;
 
 public class Account: IIdHas<long>
 {

@@ -1,5 +1,5 @@
-﻿using Domain.Entities.Account;
-using Domain.Entities.User;
+﻿using Domain.Entities.Accounts;
+using Domain.Entities.Users;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -16,7 +16,9 @@ public class AppDbContext : IdentityDbContext<User, Role, string,
     }
         
     public DbSet<User> Users { get; set; }
+    
     public DbSet<Account> Accounts { get; set; }
+    
     public DbSet<UserRole> UserRoles { get; set; }
     
 

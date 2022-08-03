@@ -17,11 +17,10 @@
       <Folder Include="Common\Helpers" />
       <Folder Include="Common\Interfaces" />
       <Folder Include="UseCases\Accounts\Commands" />
-      <Folder Include="UseCases\Accounts\Handlers" />
-      <Folder Include="UseCases\Accounts\Queries" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="MediatR" Version="10.0.1" />
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.7" />
     </ItemGroup>
 
