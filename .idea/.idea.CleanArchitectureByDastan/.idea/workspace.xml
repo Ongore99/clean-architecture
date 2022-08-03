@@ -10,16 +10,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="6d472b66-a963-445d-acad-f43069840a8d" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/CleanArchitectureByDastan.sln" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Application/Application.csproj" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/Infrastructure/Persistence/AppDbContext.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/WebApi/Common/Extensions/EfService/EfAppBuilderExtension.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/WebApi/Common/Extensions/EfService/EfServiceExtension.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/WebApi/Common/Extensions/MediatrService/MediatrServiceExtension.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/WebApi/Common/Extensions/ODataService/ODataServiceExtension.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/WebApi/Common/Extensions/WebApplicationBuilderExtension.cs" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/WebApi/Features/Accounts/AccountsController.cs" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.idea.CleanArchitectureByDastan/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/.idea.CleanArchitectureByDastan/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -90,7 +81,8 @@
       <option name="presentableId" value="Default" />
       <updated>1659339195116</updated>
       <workItem from="1659339196855" duration="12071000" />
-      <workItem from="1659426029321" duration="8082000" />
+      <workItem from="1659426029321" duration="8884000" />
+      <workItem from="1659515342532" duration="72000" />
     </task>
     <servers />
   </component>
