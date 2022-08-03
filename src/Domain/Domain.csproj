@@ -9,8 +9,6 @@
     <ItemGroup>
       <Folder Include="Common\Bases" />
       <Folder Include="Common\Constants" />
-      <Folder Include="Exceptions" />
-      <Folder Include="Resources" />
       <Folder Include="Services" />
       <Folder Include="Validations" />
     </ItemGroup>
