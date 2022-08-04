@@ -8,12 +8,12 @@
 
     <ItemGroup>
       <Folder Include="Common\Bases" />
-      <Folder Include="Common\Constants" />
       <Folder Include="Services" />
       <Folder Include="Validations" />
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.7" />
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.7" />
     </ItemGroup>
 

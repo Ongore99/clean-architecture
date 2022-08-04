@@ -1,7 +1,7 @@
 ﻿using Infrastructure.Persistence;
 using Microsoft.EntityFrameworkCore;
 
-namespace WebApi.Common.Extensions.EfService;
+namespace WebApi.Common.Extensions.EfServices;
 
 public static class EfServiceExtension
 {
@@ -10,4 +10,13 @@ public static class EfServiceExtension
         services.AddDbContext<AppDbContext>(
             options => options.UseSqlServer(configuration.GetConnectionString("Default")));
     }
+    
+    internal static void AutoMigrateDb(this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        context.Database.Migrate();
+    }
+    
 }

@@ -1,6 +1,6 @@
 ﻿using Microsoft.AspNetCore.OData;
 
-namespace WebApi.Common.Extensions.ODataService;
+namespace WebApi.Common.Extensions.ODataServices;
 
 public static class ODataServiceExtension
 {

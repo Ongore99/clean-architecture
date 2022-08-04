@@ -1,7 +1,7 @@
 using System.Reflection;
 using MediatR;
 
-namespace WebApi.Common.Extensions.MediatrService;
+namespace WebApi.Common.Extensions.MediatrServices;
 
 public static class MediatrServiceExtension
 {

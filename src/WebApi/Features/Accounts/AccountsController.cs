@@ -1,4 +1,6 @@
-﻿using System.ComponentModel;
+﻿using System.ComponentModel.DataAnnotations;
+using Core.UseCases.Accounts.Queries;
+using Domain.Entities.Accounts;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
@@ -17,9 +19,17 @@ public class AccountController : Controller
     
     [EnableQuery]
     [HttpGet("/me")]
-    public IActionResult Me()
+    public ActionResult<IQueryable<Account>> Me()
     {
+        // TODO Remove
+        var currentUserId = 1;
+        var query = new GetUserAccountsQuery()
+        {
+            UserId = currentUserId
+        };
+
+        var result = _mediator.Send(query);
         
-        return Ok();
+        return Ok(result);
     }
 }
