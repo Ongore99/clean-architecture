@@ -1,9 +1,10 @@
-﻿using CustomExceptionMiddleware;
-using Serilog;
+﻿using Serilog;
 using Serilog.Events;
 using WebApi.Common.Extensions.EfServices;
+using WebApi.Common.Extensions.FluentValidationServices;
 using WebApi.Common.Extensions.MediatrServices;
 using WebApi.Common.Extensions.ODataServices;
+using WebApi.Common.Extensions.RepositoryServices;
 using WebApi.Common.Extensions.SwaggerServices;
 
 namespace WebApi.Common.Extensions;
@@ -14,12 +15,15 @@ public static class WebApplicationBuilderExtension
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
-
-        services.AddODataService();
-        services.AddAppDbContext(configuration);
-        services.AddEndpointsApiExplorer();
-        services.AddMediatr();
+        
+        services.AddFluentValidators();
         services.AddSwagger();
+        services.AddEndpointsApiExplorer();
+        services.AddODataService();
+        services.AddMediatr();
+        services.AddAppDbContext(configuration);
+        services.AddRepositories();
+        
     }
 
     internal static void ConfigureApp(this WebApplicationBuilder builder)
@@ -30,20 +34,7 @@ public static class WebApplicationBuilderExtension
         app.UseSwaggerUi();
 
         app.UseHttpsRedirection();
-        if (builder.Environment.IsDevelopment())
-        {
-            app.UseCustomExceptionMiddleware(
-                new CustomExceptionOptions
-                {
-
-                    ViewStackTrace = true
-                });
-        }
-        else
-        {
-            app.UseCustomExceptionMiddleware();
-        }
-
+        
         app.UseAuthorization();
 
         app.MapControllers();

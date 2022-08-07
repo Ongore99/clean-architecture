@@ -1,33 +1,44 @@
 using System.Linq.Expressions;
 using Core.Common.Contracts;
 using EFCore.BulkExtensions;
+using Mapster;
 using Microsoft.EntityFrameworkCore;
 
 namespace Infrastructure.Persistence.Repositories.Base;
 
-public abstract class RepositoryBase<T>: IRepositoryBase<T> where T : class
+public class RepositoryBase<T>: IRepositoryBase<T> where T : class
 {
     protected AppDbContext RepositoryContext { get; set; }
 
-    protected RepositoryBase(AppDbContext repositoryContext) 
+    public RepositoryBase(AppDbContext repositoryContext) 
     {
         RepositoryContext = repositoryContext; 
     }
     
-    public async Task<T?> FindByIdAsync<TE>(TE id) => await RepositoryContext.Set<T>().FindAsync(id);
+    public async Task<T?> ByIdAsync<TE>(TE id) => await RepositoryContext.Set<T>().FindAsync(id);
     
-    public IQueryable<T> FindAll() => RepositoryContext.Set<T>().AsNoTracking();
+    public async Task<TD?> ByIdToTypeAsync<TE, TD>(TE id) where TD : class 
+        =>  (await RepositoryContext.Set<T>().FindAsync(id))?.Adapt<TD>();
     
-    public async Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> expression) => await RepositoryContext.Set<T>().FirstOrDefaultAsync(expression);
+    public Task<IQueryable<T>> FindAll() => Task.FromResult(RepositoryContext.Set<T>().AsNoTracking());
     
-    public IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression) => 
-        RepositoryContext.Set<T>().Where(expression).AsNoTracking();
+    public Task<IQueryable<TD>> FindAllToType<TE, TD>(TE id) where TD : class 
+        => Task.FromResult(RepositoryContext.Set<T>().AsNoTracking().ProjectToType<TD>());
+    
+    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> expression) => 
+        await RepositoryContext.Set<T>().FirstOrDefaultAsync(expression);
+    
+    public Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression) => 
+        Task.FromResult(RepositoryContext.Set<T>().Where(expression).AsNoTracking());
+    
+    public Task<IQueryable<TE>> FindByConditionToType<TE> (Expression<Func<T, bool>> expression) => 
+        Task.FromResult(RepositoryContext.Set<T>().Where(expression).AsNoTracking().ProjectToType<TE>());
     
     public async Task CreateAsync(T entity) => await RepositoryContext.Set<T>().AddAsync(entity);
     
-    public void Update(T entity) => RepositoryContext.Set<T>().Update(entity);
+    public Task Update(T entity) => Task.FromResult(RepositoryContext.Set<T>().Update(entity));
     
-    public void Delete(T entity) => RepositoryContext.Set<T>().Remove(entity);
+    public Task Delete(T entity) => Task.FromResult(RepositoryContext.Set<T>().Remove(entity));
     
     public async Task BulkUpdateAsync(IEnumerable<T> entities) => await RepositoryContext.Set<T>().BatchUpdateAsync(entities);
 

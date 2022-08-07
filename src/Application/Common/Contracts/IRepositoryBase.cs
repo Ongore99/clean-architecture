@@ -2,20 +2,26 @@ using System.Linq.Expressions;
 
 namespace Core.Common.Contracts;
 
-public interface IRepositoryBase<T>
+public interface IRepositoryBase<T> where T : class
 {
-    Task<T?> FindByIdAsync<TE>(TE id);
-    IQueryable<T> FindAll();
+    Task<T?> ByIdAsync<TE>(TE id);
+    Task<IQueryable<T>> FindAll();
+
+    Task<IQueryable<TD>> FindAllToType<TE, TD>(TE id) where TD : class;
     
-    Task<T> FirstOrDefaultAsync(Expression<Func<T, bool>> expression);
+    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> expression);
     
-    IQueryable<T> FindByCondition(Expression<Func<T, bool>> expression);
+    Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression);
+
+    Task<IQueryable<TE>> FindByConditionToType<TE>(Expression<Func<T, bool>> expression);
+    
+    Task<TD?> ByIdToTypeAsync<TE, TD>(TE id) where TD : class ;
     
     Task CreateAsync(T entity);
     
-    void Update(T entity);
+    Task Update(T entity);
     
-    void Delete(T entity);
+    Task Delete(T entity);
 
     Task BulkUpdateAsync(IEnumerable<T> entities);
 

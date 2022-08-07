@@ -10,6 +10,8 @@ public static class ODataServiceExtension
             .AddOData(options => options
                 .Select()
                 .Filter()
-                .OrderBy());
+                .OrderBy()
+                .SetMaxTop(100)
+            );
     }
 }

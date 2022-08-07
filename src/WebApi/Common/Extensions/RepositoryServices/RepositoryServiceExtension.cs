@@ -7,6 +7,6 @@ public static class RepositoryServiceExtension
 {
     internal static void AddRepositories(this IServiceCollection services)
     {
-        services.AddTransient(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
+        services.AddScoped(typeof(IRepositoryBase<>), typeof(RepositoryBase<>));
     }
 }

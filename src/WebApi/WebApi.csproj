@@ -7,8 +7,11 @@
     </PropertyGroup>
 
     <ItemGroup>
+        <PackageReference Include="FluentValidation" Version="11.1.1" />
+        <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.1.1" />
         <PackageReference Include="MediatR" Version="10.0.1" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
+        <PackageReference Include="MicroElements.Swashbuckle.FluentValidation" Version="5.7.0" />
         <PackageReference Include="Microsoft.AspNetCore.OData" Version="8.0.10" />
         <PackageReference Include="Microsoft.EntityFrameworkCore.Design" Version="6.0.7">
           <PrivateAssets>all</PrivateAssets>
@@ -23,7 +26,6 @@
       <Folder Include="Common\Attributes" />
       <Folder Include="Common\Bases" />
       <Folder Include="Common\Helpers" />
-      <Folder Include="Features\Accounts\Dtos\Requests" />
       <Folder Include="Features\Accounts\Dtos\Responses" />
     </ItemGroup>
 

@@ -1,4 +1,5 @@
 using System.Reflection;
+using Core.UseCases.Accounts.Queries.GetUserAccount;
 using MediatR;
 
 namespace WebApi.Common.Extensions.MediatrServices;
@@ -7,6 +8,7 @@ public static class MediatrServiceExtension
 {
     internal static void AddMediatr(this IServiceCollection services)
     {
-        services.AddMediatR(Assembly.GetExecutingAssembly());
+        services.AddMediatR(Assembly.GetExecutingAssembly(), typeof(GetUserAccountsHandler).Assembly);
     }
+
 }
