@@ -13,6 +13,7 @@ using WebApi.Features.Accounts.Dtos.SwaggeExamples;
 namespace WebApi.Features.Accounts;
 
 [Route("accounts")]
+[Consumes("application/json")]
 public class AccountController : Controller
 {
     private readonly IMediator _mediator;
@@ -46,20 +47,14 @@ public class AccountController : Controller
     /// <summary>
     /// Withdraw from my account
     /// </summary>
-    /// <param name="item"></param>
     /// <returns>New Updated Account</returns>
     /// <response code="200">New Updated Account</response>
-    /// <response code="400">Validations failed, see error message</response>
-    /// <response code="403">Not authorized</response>
-    /// <response code="401">Not authenticated</response>
-    /// <response code="500">Unexpected Server Error</response>
     [HttpPut("{accountId:int}/withdraw")]
     [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))]
-    [ProducesDefaultResponseType(typeof(ProblemDetails))]
     [ProducesResponseType(typeof(Account), StatusCodes.Status200OK)]
+    [ProducesDefaultResponseType(typeof(ProblemDetails))]
     public async Task<ActionResult<Account>> Withdraw([FromBody] WithdrawRequestDto dto)
     {
-        // TODO: REMOVE
         var currentUserId = 1;
         dto.UserId = currentUserId;
         var command = dto.Adapt<WithdrawCommand>();

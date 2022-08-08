@@ -5,6 +5,7 @@ namespace WebApi.Features.Accounts.Dtos.SwaggeExamples;
 
 public class WithdrawExamples : IMultipleExamplesProvider<WithdrawRequestDto>
 {
+    /// <inheritdoc />
     public IEnumerable<SwaggerExample<WithdrawRequestDto>> GetExamples()
     {
         yield return SwaggerExample.Create(
@@ -17,7 +18,7 @@ public class WithdrawExamples : IMultipleExamplesProvider<WithdrawRequestDto>
             }
         );
         yield return SwaggerExample.Create(
-            "Positive Balance",
+            "Balance",
             new WithdrawRequestDto()
             {
                 Balance = 1,

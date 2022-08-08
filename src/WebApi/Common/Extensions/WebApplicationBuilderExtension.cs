@@ -23,7 +23,6 @@ public static class WebApplicationBuilderExtension
         services.AddMediatr();
         services.AddAppDbContext(configuration);
         services.AddRepositories();
-        
     }
 
     internal static void ConfigureApp(this WebApplicationBuilder builder)

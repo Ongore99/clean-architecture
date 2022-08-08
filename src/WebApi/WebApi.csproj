@@ -6,8 +6,17 @@
         <ImplicitUsings>enable</ImplicitUsings>
     </PropertyGroup>
 
+    <PropertyGroup Condition=" '$(Configuration)' == 'Debug' ">
+      <DocumentationFile>bin\Debug\WebApi.xml</DocumentationFile>
+      <NoWarn>1701;1702;1591</NoWarn>
+    </PropertyGroup>
+
+    <PropertyGroup Condition=" '$(Configuration)' == 'Release' ">
+      <DocumentationFile>bin\Release\WebApi.xml</DocumentationFile>
+    </PropertyGroup>
+
     <ItemGroup>
-        <PackageReference Include="FluentValidation" Version="11.1.1" />
+        <PackageReference Include="FluentValidation.AspNetCore" Version="11.1.3" />
         <PackageReference Include="FluentValidation.DependencyInjectionExtensions" Version="11.1.1" />
         <PackageReference Include="MediatR" Version="10.0.1" />
         <PackageReference Include="MediatR.Extensions.Microsoft.DependencyInjection" Version="10.0.1" />
@@ -24,7 +33,6 @@
 
     <ItemGroup>
       <Folder Include="Common\Attributes" />
-      <Folder Include="Common\Bases" />
       <Folder Include="Common\Helpers" />
       <Folder Include="Features\Accounts\Dtos\Responses" />
     </ItemGroup>

@@ -1,5 +1,7 @@
 using Domain.Common.Constants;
+using FluentValidation;
 using MicroElements.Swashbuckle.FluentValidation.AspNetCore;
+using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
@@ -12,6 +14,8 @@ public static class SwaggerServiceExtension
     internal static void AddSwagger(this IServiceCollection services)
     {
         services.AddSwaggerExamplesFromAssemblyOf<WithdrawExamples>();
+        services.TryAddTransient<IValidatorFactory, ServiceProviderValidatorFactory>();
+        services.AddFluentValidationRulesToSwagger();
 
         services.AddSwaggerGen(x =>
         {
@@ -21,13 +25,10 @@ public static class SwaggerServiceExtension
                 Version = "v1",
             });
             x.DescribeAllParametersInCamelCase();
-            
             x.CustomSchemaIds(t => t.FullName?.Replace("+", "."));
             x.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{nameof(WebApi)}.xml"));
+            x.ExampleFilters();
         });
-        
-    
-        services.AddFluentValidationRulesToSwagger();
     }
     
     internal static void UseSwaggerUi(this IApplicationBuilder app)
@@ -46,7 +47,6 @@ public static class SwaggerServiceExtension
             x.EnableDeepLinking();
             x.EnableFilter();
             x.ShowExtensions();
-
         });
     }
 }
