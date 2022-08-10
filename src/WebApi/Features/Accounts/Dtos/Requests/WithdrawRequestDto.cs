@@ -1,22 +1,19 @@
 using System.Text.Json.Serialization;
 using FluentValidation;
-using Microsoft.AspNetCore.Mvc;
+using WebApi.Common.Services;
 
 namespace WebApi.Features.Accounts.Dtos.Requests;
 
 
 public class WithdrawRequestDto
 {
-    [FromBody]
     public decimal Balance { get; set; }
 
     [JsonIgnore]
-    [FromRoute]
     public int AccountId { get; set; }
     
     [JsonIgnore]
-    [FromBody]
-    public int UserId { get; set; }
+    public int UserId => UserService.GetCurrentUser();
 }
 
 public class WithdrawRequestValidator : AbstractValidator<WithdrawRequestDto> 

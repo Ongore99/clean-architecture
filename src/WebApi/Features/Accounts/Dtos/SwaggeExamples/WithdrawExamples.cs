@@ -1,3 +1,4 @@
+using Domain.Entities.Users;
 using Swashbuckle.AspNetCore.Filters;
 using WebApi.Features.Accounts.Dtos.Requests;
 
@@ -13,17 +14,13 @@ public class WithdrawExamples : IMultipleExamplesProvider<WithdrawRequestDto>
             new WithdrawRequestDto()
             {
                 Balance = 1,
-                AccountId = 1,
-                UserId = 1
             }
         );
         yield return SwaggerExample.Create(
-            "Balance",
-            new WithdrawRequestDto()
+            "Negative Balance",
+            new WithdrawRequestDto
             {
-                Balance = 1,
-                AccountId = 1,
-                UserId = 1
+                Balance = -1,
             }
         );
     }
