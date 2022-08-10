@@ -2,7 +2,7 @@ using System.Text.Json.Serialization;
 using FluentValidation;
 using WebApi.Common.Services;
 
-namespace WebApi.Features.Accounts.Dtos.Requests;
+namespace WebApi.Endpoints.Accounts.Dtos.Requests;
 
 
 public class WithdrawRequestDto

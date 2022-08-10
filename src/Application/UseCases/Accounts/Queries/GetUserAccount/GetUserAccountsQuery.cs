@@ -1,4 +1,4 @@
-using Core.Common.Contracts;
+using Domain.Common.Contracts;
 using Domain.Entities.Accounts;
 using MediatR;
 

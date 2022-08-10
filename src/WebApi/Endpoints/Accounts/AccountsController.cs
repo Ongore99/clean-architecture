@@ -9,10 +9,10 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.OData.Query;
 using Swashbuckle.AspNetCore.Filters;
 using WebApi.Common.Extensions;
-using WebApi.Features.Accounts.Dtos.Requests;
-using WebApi.Features.Accounts.Dtos.SwaggeExamples;
+using WebApi.Endpoints.Accounts.Dtos.Requests;
+using WebApi.Endpoints.Accounts.Dtos.SwaggeExamples;
 
-namespace WebApi.Features.Accounts;
+namespace WebApi.Endpoints.Accounts;
 
 [Route("accounts")]
 [Consumes("application/json")]

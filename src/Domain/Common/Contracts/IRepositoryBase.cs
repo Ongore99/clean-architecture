@@ -1,10 +1,11 @@
 using System.Linq.Expressions;
 
-namespace Core.Common.Contracts;
+namespace Domain.Common.Contracts;
 
 public interface IRepositoryBase<T> where T : class
 {
-    Task<T?> ByIdAsync<TE>(TE id);
+    Task<T> ByIdAsync<TE>(TE id);
+    
     Task<IQueryable<T>> FindAll();
 
     Task<IQueryable<TD>> FindAllToType<TE, TD>(TE id) where TD : class;
@@ -28,6 +29,12 @@ public interface IRepositoryBase<T> where T : class
     Task BulkInsertAsync(IList<T> entities);
 
     Task BulkDeleteAsync(IList<T> entities);
+
+    Task BulkUpsert(IList<T> entities);
+    
+    Task BulkUpsertOrDelete(IList<T> entities);
     
     Task SaveAsync(T entity);
+
+    Task BulkSaveAsync(T entity);
 }

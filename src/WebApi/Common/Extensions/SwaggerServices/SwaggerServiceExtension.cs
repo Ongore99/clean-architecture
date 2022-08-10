@@ -5,7 +5,7 @@ using Microsoft.Extensions.DependencyInjection.Extensions;
 using Microsoft.OpenApi.Models;
 using Swashbuckle.AspNetCore.Filters;
 using Swashbuckle.AspNetCore.SwaggerUI;
-using WebApi.Features.Accounts.Dtos.SwaggeExamples;
+using WebApi.Endpoints.Accounts.Dtos.SwaggeExamples;
 
 namespace WebApi.Common.Extensions.SwaggerServices;
 

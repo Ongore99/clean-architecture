@@ -12,6 +12,7 @@
       <Folder Include="Common\Constants" />
       <Folder Include="Common\Extensions" />
       <Folder Include="Common\Helpers" />
+      <Folder Include="Common\Resources" />
       <Folder Include="Files" />
       <Folder Include="Identity" />
     </ItemGroup>
@@ -27,6 +28,12 @@
     <ItemGroup>
       <ProjectReference Include="..\Application\Application.csproj" />
       <ProjectReference Include="..\Domain\Domain.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <Reference Include="Microsoft.Extensions.Localization.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
+        <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.3\Microsoft.Extensions.Localization.Abstractions.dll</HintPath>
+      </Reference>
     </ItemGroup>
 
 </Project>

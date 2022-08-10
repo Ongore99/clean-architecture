@@ -1,5 +1,5 @@
 using FluentValidation;
-using WebApi.Features.Accounts.Dtos.Requests;
+using WebApi.Endpoints.Accounts.Dtos.Requests;
 
 namespace WebApi.Common.Extensions.FluentValidationServices;
 

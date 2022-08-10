@@ -1,8 +1,7 @@
-using Domain.Entities.Users;
 using Swashbuckle.AspNetCore.Filters;
-using WebApi.Features.Accounts.Dtos.Requests;
+using WebApi.Endpoints.Accounts.Dtos.Requests;
 
-namespace WebApi.Features.Accounts.Dtos.SwaggeExamples;
+namespace WebApi.Endpoints.Accounts.Dtos.SwaggeExamples;
 
 public class WithdrawExamples : IMultipleExamplesProvider<WithdrawRequestDto>
 {

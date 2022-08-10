@@ -35,7 +35,7 @@
       <Folder Include="Common\Attributes" />
       <Folder Include="Common\Filters" />
       <Folder Include="Common\Helpers" />
-      <Folder Include="Features\Accounts\Dtos\Responses" />
+      <Folder Include="Endpoints\Accounts\Dtos\Responses" />
     </ItemGroup>
 
     <ItemGroup>

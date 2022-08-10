@@ -1,21 +1,39 @@
 using System.Linq.Expressions;
-using Core.Common.Contracts;
+using Domain.Common;
+using Domain.Common.Constants;
+using Domain.Common.Contracts;
+using Domain.Common.Exceptions;
+using Domain.Common.Resources;
 using EFCore.BulkExtensions;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.Extensions.Localization;
 
 namespace Infrastructure.Persistence.Repositories.Base;
 
-public class RepositoryBase<T>: IRepositoryBase<T> where T : class
+// TODO: Add As No tracking
+public class RepositoryBase<T> : IRepositoryBase<T> where T : class
 {
+    private readonly IStringLocalizer<SharedResource> _localizer;
     protected AppDbContext RepositoryContext { get; set; }
-
-    public RepositoryBase(AppDbContext repositoryContext) 
-    {
-        RepositoryContext = repositoryContext; 
-    }
     
-    public async Task<T?> ByIdAsync<TE>(TE id) => await RepositoryContext.Set<T>().FindAsync(id);
+    public RepositoryBase(AppDbContext repositoryContext, IStringLocalizer<SharedResource> _localizer)
+    {
+        this._localizer = _localizer;
+        RepositoryContext = repositoryContext;
+    }
+
+    public async Task<T> ByIdAsync<TE>(TE id)
+    { 
+        var entity = await RepositoryContext.Set<T>().FindAsync(id);
+        
+        if (entity is null)
+        {
+            throw new NotFoundException(_localizer.GetText(ResourceKeyConst.NotFoundText, typeof(TE).ToString()));
+        }
+
+        return entity;
+    }
     
     public async Task<TD?> ByIdToTypeAsync<TE, TD>(TE id) where TD : class 
         =>  (await RepositoryContext.Set<T>().FindAsync(id))?.Adapt<TD>();
@@ -49,6 +67,20 @@ public class RepositoryBase<T>: IRepositoryBase<T> where T : class
         });
     
     public async Task BulkDeleteAsync(IList<T> entities) => await RepositoryContext.BulkDeleteAsync(entities);
+    
+    public async Task BulkUpsert(IList<T> entities) => await RepositoryContext.BulkInsertOrUpdateAsync(entities,  
+        new BulkConfig()
+        {
+            SetOutputIdentity = true
+        });
+    
+    public async Task BulkUpsertOrDelete(IList<T> entities) => await RepositoryContext.BulkInsertOrUpdateOrDeleteAsync(entities,
+        new BulkConfig()
+        {
+            SetOutputIdentity = true
+        });
 
     public async Task SaveAsync(T entity) => await RepositoryContext.SaveChangesAsync();
+    
+    public async Task BulkSaveAsync(T entity) => await RepositoryContext.BulkSaveChangesAsync();
 }
