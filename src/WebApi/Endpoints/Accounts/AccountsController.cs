@@ -55,8 +55,10 @@ public class AccountController : Controller
     [ProducesDefaultResponseType(typeof(ProblemDetails))]
     [ProducesResponseType(typeof(Account), StatusCodes.Status200OK)]
     [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))]
-    public async Task<ActionResult<Account>> Withdraw([FromBody] WithdrawRequestDto dto,[FromRoute] int accountId
-        ,[FromServices] IValidator<WithdrawRequestDto> validator)
+    public async Task<ActionResult<Account>> Withdraw(
+        [FromBody] WithdrawRequestDto dto,
+        [FromRoute] int accountId,
+        [FromServices] IValidator<WithdrawRequestDto> validator)
     {
         dto.AccountId = accountId;
         

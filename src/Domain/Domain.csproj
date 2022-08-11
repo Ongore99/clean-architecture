@@ -12,29 +12,31 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="FluentValidation" Version="11.2.0" />
       <PackageReference Include="Microsoft.EntityFrameworkCore.Abstractions" Version="6.0.7" />
       <PackageReference Include="Microsoft.Extensions.Identity.Stores" Version="6.0.7" />
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Common\Resources\SharedResource.resx">
+      <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.resx">
         <Generator>ResXFileCodeGenerator</Generator>
         <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
+        <DependentUpon>SharedResource.properties</DependentUpon>
       </EmbeddedResource>
-    </ItemGroup>
-
-    <ItemGroup>
-      <Compile Update="Common\Resources\SharedResource.Designer.cs">
-        <DesignTime>True</DesignTime>
-        <AutoGen>True</AutoGen>
-        <DependentUpon>SharedResource.resx</DependentUpon>
-      </Compile>
     </ItemGroup>
 
     <ItemGroup>
       <Reference Include="Microsoft.Extensions.Localization.Abstractions, Version=6.0.0.0, Culture=neutral, PublicKeyToken=adb9793829ddae60">
         <HintPath>C:\Program Files\dotnet\shared\Microsoft.AspNetCore.App\6.0.3\Microsoft.Extensions.Localization.Abstractions.dll</HintPath>
       </Reference>
+    </ItemGroup>
+
+    <ItemGroup>
+      <Compile Update="Common\Resources\SharedResource\SharedResource.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>SharedResource.resx</DependentUpon>
+      </Compile>
     </ItemGroup>
 
 </Project>

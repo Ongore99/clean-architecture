@@ -2,6 +2,7 @@
 using Serilog.Events;
 using WebApi.Common.Extensions.EfServices;
 using WebApi.Common.Extensions.FluentValidationServices;
+using WebApi.Common.Extensions.LocalizationServices;
 using WebApi.Common.Extensions.MediatrServices;
 using WebApi.Common.Extensions.ODataServices;
 using WebApi.Common.Extensions.RepositoryServices;
@@ -15,6 +16,7 @@ public static class WebApplicationBuilderExtension
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
+        var env = builder.Environment;
         
         services.AddFluentValidators();
         services.AddSwagger();
@@ -32,10 +34,10 @@ public static class WebApplicationBuilderExtension
 
         app.UseSwaggerUi();
 
+        app.UseLocalization();
         app.UseHttpsRedirection();
         
         app.UseAuthorization();
-
         app.MapControllers();
 
         app.AutoMigrateDb();

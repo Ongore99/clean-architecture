@@ -12,12 +12,15 @@ using Microsoft.Extensions.Localization;
 namespace Infrastructure.Persistence.Repositories.Base;
 
 // TODO: Add As No tracking
-public class RepositoryBase<T> : IRepositoryBase<T> where T : class
+public class BaseRepository<T> : IBaseRepository<T> where T : class
 {
     private readonly IStringLocalizer<SharedResource> _localizer;
-    protected AppDbContext RepositoryContext { get; set; }
     
-    public RepositoryBase(AppDbContext repositoryContext, IStringLocalizer<SharedResource> _localizer)
+    private AppDbContext RepositoryContext { get; set; }
+    
+    public bool WithTracking { get; set; } = false;
+
+    public BaseRepository(AppDbContext repositoryContext, IStringLocalizer<SharedResource> _localizer)
     {
         this._localizer = _localizer;
         RepositoryContext = repositoryContext;
@@ -29,7 +32,7 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : class
         
         if (entity is null)
         {
-            throw new NotFoundException(_localizer.GetText(ResourceKeyConst.NotFoundText, typeof(TE).ToString()));
+            throw new NotFoundException(_localizer.Text(ResxKey.NotFoundText, typeof(TE).ToString()));
         }
 
         return entity;
@@ -42,21 +45,58 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : class
     
     public Task<IQueryable<TD>> FindAllToType<TE, TD>(TE id) where TD : class 
         => Task.FromResult(RepositoryContext.Set<T>().AsNoTracking().ProjectToType<TD>());
+
+    public async Task<T> FirstAsync(Expression<Func<T, bool>> expression)
+    {
+        var entity = await RepositoryContext.Set<T>().FirstOrDefaultAsync(expression);
+        
+        if (entity is null)
+        {
+            throw new NotFoundException(_localizer.Text(ResxKey.NotFoundText, typeof(T).ToString()));
+        }
+        
+        return entity;
+    }
     
-    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> expression) => 
-        await RepositoryContext.Set<T>().FirstOrDefaultAsync(expression);
+    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> expression)
+    {
+        var entity = await RepositoryContext.Set<T>().FirstOrDefaultAsync(expression);
+        
+        return entity;
+    }
     
     public Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression) => 
         Task.FromResult(RepositoryContext.Set<T>().Where(expression).AsNoTracking());
     
     public Task<IQueryable<TE>> FindByConditionToType<TE> (Expression<Func<T, bool>> expression) => 
         Task.FromResult(RepositoryContext.Set<T>().Where(expression).AsNoTracking().ProjectToType<TE>());
-    
-    public async Task CreateAsync(T entity) => await RepositoryContext.Set<T>().AddAsync(entity);
-    
-    public Task Update(T entity) => Task.FromResult(RepositoryContext.Set<T>().Update(entity));
-    
-    public Task Delete(T entity) => Task.FromResult(RepositoryContext.Set<T>().Remove(entity));
+
+    public async Task CreateAsync(T entity, bool save = false)
+    {
+        await RepositoryContext.Set<T>().AddAsync(entity);
+        if (save)
+        {
+            await SaveAsync();
+        }
+    }
+
+    public async Task Update(T entity, bool save = false)
+    {
+        RepositoryContext.Set<T>().Update(entity);
+        if (save)
+        {
+            await SaveAsync();
+        }
+    }
+
+    public async Task Delete(T entity, bool save = false)
+    {
+       RepositoryContext.Set<T>().Remove(entity);
+       if (save)
+       {
+           await SaveAsync();
+       }
+    }
     
     public async Task BulkUpdateAsync(IEnumerable<T> entities) => await RepositoryContext.Set<T>().BatchUpdateAsync(entities);
 
@@ -80,7 +120,7 @@ public class RepositoryBase<T> : IRepositoryBase<T> where T : class
             SetOutputIdentity = true
         });
 
-    public async Task SaveAsync(T entity) => await RepositoryContext.SaveChangesAsync();
+    public async Task SaveAsync() => await RepositoryContext.SaveChangesAsync();
     
-    public async Task BulkSaveAsync(T entity) => await RepositoryContext.BulkSaveChangesAsync();
+    public async Task BulkSaveAsync() => await RepositoryContext.BulkSaveChangesAsync();
 }

@@ -2,7 +2,7 @@ using System.Linq.Expressions;
 
 namespace Domain.Common.Contracts;
 
-public interface IRepositoryBase<T> where T : class
+public interface  IBaseRepository<T> where T : class
 {
     Task<T> ByIdAsync<TE>(TE id);
     
@@ -10,7 +10,7 @@ public interface IRepositoryBase<T> where T : class
 
     Task<IQueryable<TD>> FindAllToType<TE, TD>(TE id) where TD : class;
     
-    Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> expression);
+    Task<T> FirstAsync(Expression<Func<T, bool>> expression);
     
     Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression);
 
@@ -18,11 +18,11 @@ public interface IRepositoryBase<T> where T : class
     
     Task<TD?> ByIdToTypeAsync<TE, TD>(TE id) where TD : class ;
     
-    Task CreateAsync(T entity);
+    Task CreateAsync(T entity, bool save = false);
     
-    Task Update(T entity);
+    Task Update(T entity, bool save = false);
     
-    Task Delete(T entity);
+    Task Delete(T entity, bool save = false);
 
     Task BulkUpdateAsync(IEnumerable<T> entities);
 
@@ -34,7 +34,7 @@ public interface IRepositoryBase<T> where T : class
     
     Task BulkUpsertOrDelete(IList<T> entities);
     
-    Task SaveAsync(T entity);
+    Task SaveAsync();
 
-    Task BulkSaveAsync(T entity);
+    Task BulkSaveAsync();
 }

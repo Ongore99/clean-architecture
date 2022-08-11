@@ -11,16 +11,16 @@ public class GetUserAccountsQuery: IRequest<IQueryable<UserAccountsGetOut>>
 
 public class GetUserAccountsHandler : IRequestHandler<GetUserAccountsQuery, IQueryable<UserAccountsGetOut>>
 {
-    private IRepositoryBase<Account> RepositoryBase;
+    private readonly IBaseRepository<Account> _baseRepository;
 
-    public GetUserAccountsHandler(IRepositoryBase<Account> repositoryBase)
+    public GetUserAccountsHandler(IBaseRepository<Account> baseRepository)
     {
-        RepositoryBase = repositoryBase;
+        _baseRepository = baseRepository;
     }
 
     public async Task<IQueryable<UserAccountsGetOut>> Handle(GetUserAccountsQuery request, CancellationToken cancellationToken)
     {
-        var accounts = await RepositoryBase
+        var accounts = await _baseRepository
             .FindByConditionToType<UserAccountsGetOut>(x => x.UserId == request.UserId);
         
         return accounts;

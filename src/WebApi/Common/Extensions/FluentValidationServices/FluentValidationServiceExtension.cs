@@ -1,3 +1,4 @@
+using Domain.Common.Validations;
 using FluentValidation;
 using WebApi.Endpoints.Accounts.Dtos.Requests;
 
@@ -8,5 +9,6 @@ public static class FluentValidationServiceExtension
     internal static void AddFluentValidators(this IServiceCollection services)
     {
         services.AddValidatorsFromAssemblyContaining<WithdrawRequestValidator>();
+        services.AddValidatorsFromAssemblyContaining<AccountValidator>();
     }
 }

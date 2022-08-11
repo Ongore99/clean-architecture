@@ -18,7 +18,7 @@ public class WithdrawRequestDto
 
 public class WithdrawRequestValidator : AbstractValidator<WithdrawRequestDto> 
 {
-    public WithdrawRequestValidator() 
+    public WithdrawRequestValidator()
     {
         RuleFor(x => x.Balance).GreaterThan(0);
         RuleFor(x => x.AccountId).GreaterThan(0);

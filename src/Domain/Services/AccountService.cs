@@ -1,21 +1,24 @@
-using Domain.Common.Contracts;
+using Domain.Common.Extensions;
 using Domain.Entities.Accounts;
+using Domain.Services.Interfaces;
+using FluentValidation;
 
 namespace Domain.Services;
 
-public class AccountService
+public class AccountService : IAccountService
 {
-    private readonly IRepositoryBase<Account> _repositoryBase;
+    private readonly IValidator<Account> _accountValidator;
 
-    public AccountService(IRepositoryBase<Account> repositoryBase)
+    public AccountService(IValidator<Account> accountValidator)
     {
-        _repositoryBase = repositoryBase;
+        _accountValidator = accountValidator;
     }
 
-    public async Task<bool> CheckAccountOwner(int accountId, int userId)
+    public async Task Withdraw(Account account, decimal balance)
     {
-        var account = await _repositoryBase.ByIdAsync(accountId);
-
-        return account.UserId == userId;
+        account.Balance -= balance;
+        await _accountValidator.ValidatAndThrowExAsync(account, 
+            x => x.Balance);
     }
+
 }

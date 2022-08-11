@@ -1,5 +1,6 @@
 using Domain.Common.Contracts;
 using Domain.Entities.Accounts;
+using Domain.Services.Interfaces;
 using MediatR;
 
 namespace Core.UseCases.Accounts.Commands.Withdraw;
@@ -13,21 +14,24 @@ public class WithdrawCommand: IRequest<Account>
     public int AccountId { get; set; }
 }
 
-public class GetUserAccountsHandler : IRequestHandler<WithdrawCommand, Account>
+public class WithdrawHandler : IRequestHandler<WithdrawCommand, Account>
 {
-    private IRepositoryBase<Account> RepositoryBase;
+    private readonly IAccountRepository _accountRepository;
+    private readonly IAccountService _accountService;
 
-    public GetUserAccountsHandler(IRepositoryBase<Account> repositoryBase)
+    public WithdrawHandler(IAccountRepository accountRepository, IAccountService accountService)
     {
-        RepositoryBase = repositoryBase;
+        _accountRepository = accountRepository;
+        _accountService = accountService;
     }
 
     public async Task<Account> Handle(WithdrawCommand cmd, CancellationToken cancellationToken)
     {
-        var account = await RepositoryBase
-            .ByIdAsync(cmd.AccountId);
+        var account = await _accountRepository.GetUserAccount(cmd.UserId, cmd.AccountId);
 
-
+        await _accountService.Withdraw(account, cmd.Balance);
+        await _accountRepository.Update(account, true);
+        
         return account;
     }
 }
