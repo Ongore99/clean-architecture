@@ -19,7 +19,7 @@
 
     <ItemGroup>
       <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.resx">
-        <Generator>ResXFileCodeGenerator</Generator>
+        <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
         <DependentUpon>SharedResource.properties</DependentUpon>
       </EmbeddedResource>

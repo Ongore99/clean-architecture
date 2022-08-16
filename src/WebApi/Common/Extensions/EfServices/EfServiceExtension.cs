@@ -10,7 +10,6 @@ public static class EfServiceExtension
         services.AddDbContext<AppDbContext>(options => 
         {
             options.UseSqlServer(configuration.GetConnectionString("Default"));
-
         });
     }
     

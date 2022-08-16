@@ -5,7 +5,7 @@ using MediatR;
 
 namespace Core.UseCases.Accounts.Commands.Withdraw;
 
-public class WithdrawCommand: IRequest<Account>
+public class WithdrawCommand : IRequest<Account>
 {
     public int UserId { get; set; }
     

@@ -37,7 +37,6 @@ public static class SwaggerServiceExtension
         app.UseSwaggerUI(x =>
         {
             x.SwaggerEndpoint("/swagger/v1/swagger.json", $"{AppConstants.AppName} API v1");
-            x.RoutePrefix = "";
             x.DefaultModelExpandDepth(3);
             x.DefaultModelRendering(ModelRendering.Example);
             x.DefaultModelsExpandDepth(-1);

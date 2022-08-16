@@ -4,7 +4,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Domain.Entities.Accounts;
 
-public class Account: IIdHas<long>
+public class Account : IIdHas<long>
 {
     public long Id { get; set; }
 

@@ -17,7 +17,7 @@ public class AccountService : IAccountService
     public async Task Withdraw(Account account, decimal balance)
     {
         account.Balance -= balance;
-        await _accountValidator.ValidatAndThrowExAsync(account, 
+        await _accountValidator.ValidateAndThrowExAsync(account, 
             x => x.Balance);
     }
 

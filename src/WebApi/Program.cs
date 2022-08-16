@@ -16,6 +16,12 @@ public static class Program
         }
         catch (Exception ex)
         {
+            string type = ex.GetType().Name;
+            if (type.Equals("StopTheHostException", StringComparison.Ordinal))
+            {
+                throw;
+            }
+
             Console.WriteLine($"Application start-up failed. Exception = '{ex.Message}'");
         }
         finally

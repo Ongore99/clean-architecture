@@ -6,7 +6,7 @@ namespace Domain.Common.Extensions;
 
 public static class ValidatorExtensions
 {
-    public static async Task<ValidationResult> ValidatAndThrowExAsync<T>(this IValidator<T> validator, 
+    public static async Task<ValidationResult> ValidateAndThrowExAsync<T>(this IValidator<T> validator, 
         T instance, 
         params Expression<Func<T, object>>[] propertyExpressions)
     {
