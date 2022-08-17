@@ -48,6 +48,7 @@ public static class WebApplicationBuilderExtension
         app.MapControllers();
 
         app.AutoMigrateDb();
+        app.Seed
         app.Run();
     }
 

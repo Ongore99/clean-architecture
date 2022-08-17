@@ -13,7 +13,7 @@ public static class ODataServiceExtension
                     .Select()
                     .Filter()
                     .OrderBy()
-                    .SetMaxTop(100);
+                    .SetMaxTop(25);
             });
     }
 }

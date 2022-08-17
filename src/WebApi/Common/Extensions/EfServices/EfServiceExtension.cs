@@ -1,4 +1,5 @@
 ﻿using Infrastructure.Persistence;
+using Infrastructure.Persistence.Seed;
 using Microsoft.EntityFrameworkCore;
 
 namespace WebApi.Common.Extensions.EfServices;
@@ -19,6 +20,14 @@ public static class EfServiceExtension
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
         
         context.Database.Migrate();
+    }
+    
+    internal static void Seed(this IApplicationBuilder app)
+    {
+        using var scope = app.ApplicationServices.CreateScope();
+        var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
+
+        context.SeedData();
     }
     
 }

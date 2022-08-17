@@ -13,9 +13,32 @@ public static class SeedAccountExtension
                 Balance = 20000,
                 AccountStatusId = 1,
                 AccountTypeId = 1,
-                Description = "S"
+                Description = "Description"
+            },
+            new()
+            {
+                Balance = 100,
+                AccountStatusId = 1,
+                AccountTypeId = 1,
+                Description = "Some Description"
+            },
+            new()
+            {
+                Balance = 1,
+                AccountStatusId = 1,
+                AccountTypeId = 1,
+                Description = "One More Description"
             }
-        }
+        };
+
+        accounts.ForEach(x =>
+        {
+            var entity = dbContext.Accounts.FirstOrDefault(y => y.Balance == x.Balance);
+            if (entity is null)
+            {
+                dbContext.AddAsync(entity);
+            }
+        });
     }
     
 }
