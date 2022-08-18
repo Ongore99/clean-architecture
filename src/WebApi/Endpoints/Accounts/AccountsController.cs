@@ -15,7 +15,7 @@ using WebApi.Endpoints.Accounts.Dtos.SwaggeExamples;
 namespace WebApi.Endpoints.Accounts;
 
 [Route("accounts")]
-[Consumes("application/json")]
+[Consumes(MediaTypeNames.Application.Json)]
 public class AccountController : Controller
 {
     private readonly IMediator _mediator;
@@ -51,7 +51,7 @@ public class AccountController : Controller
     /// </summary>
     /// <returns>New Updated Account</returns>
     /// <response code="200">New Updated Account</response>
-    [HttpPut("{accountId:int}/withdraw")]
+    [HttpPatch("{accountId:int}/withdraw")]
     [ProducesDefaultResponseType(typeof(ProblemDetails))]
     [ProducesResponseType(typeof(Account), StatusCodes.Status200OK)]
     [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))]

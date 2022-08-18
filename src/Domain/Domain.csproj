@@ -18,10 +18,16 @@
     </ItemGroup>
 
     <ItemGroup>
+      <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.en-us.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+      </EmbeddedResource>
       <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
         <DependentUpon>SharedResource.properties</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.ru-ru.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
       </EmbeddedResource>
     </ItemGroup>
 

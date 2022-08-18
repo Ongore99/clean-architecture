@@ -8,7 +8,7 @@ namespace Infrastructure.Persistence.Repositories;
 
 public class AccountRepository : BaseRepository<Account>, IAccountRepository
 {
-    public AccountRepository(AppDbContext repositoryContext, IStringLocalizer<SharedResource> _localizer) : base(repositoryContext, _localizer)
+    public AccountRepository(AppDbContext repositoryContext, IStringLocalizer<SharedResource> localizer) : base(repositoryContext, localizer)
     {
     }
 

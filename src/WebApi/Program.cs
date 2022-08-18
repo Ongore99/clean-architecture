@@ -21,12 +21,15 @@ public static class Program
             {
                 throw;
             }
-
+            
+            Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Application start-up failed. Exception = '{ex.Message}'");
         }
         finally
         {
+            Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Shutting down, time = {DateTime.UtcNow:s}");
+            Console.ResetColor();
         }
     }
 }

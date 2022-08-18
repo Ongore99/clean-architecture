@@ -38,7 +38,7 @@ public static class WebApplicationBuilderExtension
         var app = builder.Build();
         var configuration = builder.Configuration;
 
-        app.UseProblemDetails();
+        app.UseErrorHandling();
         app.UseSwaggerUi();
 
         app.UseLocalization();
@@ -48,7 +48,7 @@ public static class WebApplicationBuilderExtension
         app.MapControllers();
 
         app.AutoMigrateDb();
-        app.Seed
+        app.Seed();
         app.Run();
     }
 

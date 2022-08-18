@@ -10,35 +10,39 @@ public static class SeedAccountExtension
         {
             new()
             {
-                Balance = 20000,
+                Balance = 2000.0m,
                 AccountStatusId = 1,
                 AccountTypeId = 1,
-                Description = "Description"
+                Description = "Description",
+                UserId = 1
             },
             new()
             {
-                Balance = 100,
+                Balance = 100.0m,
                 AccountStatusId = 1,
                 AccountTypeId = 1,
-                Description = "Some Description"
+                Description = "Some Description",
+                UserId = 1
             },
             new()
             {
-                Balance = 1,
+                Balance = 1.0m,
                 AccountStatusId = 1,
                 AccountTypeId = 1,
-                Description = "One More Description"
+                Description = "One More Description",
+                UserId = 1
             }
         };
 
-        accounts.ForEach(x =>
+        foreach (var account in accounts)
         {
-            var entity = dbContext.Accounts.FirstOrDefault(y => y.Balance == x.Balance);
+            var entity = dbContext.Accounts
+                .FirstOrDefault(y => y.Balance == account.Balance);
             if (entity is null)
             {
-                dbContext.AddAsync(entity);
+                await dbContext.Accounts.AddAsync(account);
             }
-        });
+        }
     }
     
 }
