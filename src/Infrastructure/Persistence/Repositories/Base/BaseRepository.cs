@@ -1,9 +1,8 @@
 using System.Linq.Expressions;
-using Domain.Common;
 using Domain.Common.Constants;
 using Domain.Common.Contracts;
 using Domain.Common.Exceptions;
-using Domain.Common.Resources;
+using Domain.Common.Resources.SharedResource;
 using EFCore.BulkExtensions;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
@@ -32,7 +31,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         
         if (entity is null)
         {
-            throw new NotFoundException(_localizer.Text(ResxKey.NotFoundText, typeof(TE).ToString()));
+            throw new NotFoundException(_localizer[ResxKey.NotFoundText, typeof(TE).ToString()]);
         }
 
         return entity;
@@ -52,7 +51,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         
         if (entity is null)
         {
-            throw new NotFoundException(_localizer.Text(ResxKey.NotFoundText, typeof(T).ToString()));
+            throw new NotFoundException(_localizer[ResxKey.NotFoundText, typeof(T).ToString()]);
         }
         
         return entity;

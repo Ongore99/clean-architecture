@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Domain.Common.Resources {
+namespace Domain.Common.Resources.SharedResource {
     using System;
     
     

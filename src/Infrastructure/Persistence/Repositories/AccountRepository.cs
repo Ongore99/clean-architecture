@@ -1,5 +1,5 @@
 using Domain.Common.Contracts;
-using Domain.Common.Resources;
+using Domain.Common.Resources.SharedResource;
 using Domain.Entities.Accounts;
 using Infrastructure.Persistence.Repositories.Base;
 using Microsoft.Extensions.Localization;
