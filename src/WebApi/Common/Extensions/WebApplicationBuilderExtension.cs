@@ -1,4 +1,5 @@
 ﻿using Serilog;
+using Serilog.Core;
 using WebApi.Common.Extensions.DomainServices;
 using WebApi.Common.Extensions.EfServices;
 using WebApi.Common.Extensions.ErrorHandlingServices;
@@ -13,7 +14,7 @@ namespace WebApi.Common.Extensions;
 
 public static class WebApplicationBuilderExtension
 {
-    internal static void ConfigureServices(this WebApplicationBuilder builder)
+    internal static void ConfigureServices(this WebApplicationBuilder builder, Logger logger)
     {
         var services = builder.Services;
         var configuration = builder.Configuration;
@@ -24,7 +25,7 @@ public static class WebApplicationBuilderExtension
         services.AddEndpointsApiExplorer();
         services.AddODataService();
         services.AddLocalizationService();
-        services.AddErrorHandlingService(configuration, env);
+        services.AddErrorHandlingService(configuration, env, logger);
         services.AddMediatr();
         services.AddAppDbContext(configuration);
         services.AddRepositories();
@@ -38,7 +39,9 @@ public static class WebApplicationBuilderExtension
 
         app.UseErrorHandling();
         app.UseSwaggerUi();
-
+        app.UsePathBase(new PathString("/api"));
+        app.UseRouting();
+        
         app.UseLocalization();
         app.UseHttpsRedirection();
         app.UseSerilogRequestLogging();
@@ -51,7 +54,7 @@ public static class WebApplicationBuilderExtension
         app.Run();
     }
 
-    internal static void RegisterSerilog(this WebApplicationBuilder builder)
+    internal static Logger RegisterSerilog(this WebApplicationBuilder builder)
     {
         var _logger = new LoggerConfiguration()
             .ReadFrom.Configuration(builder.Configuration)
@@ -61,5 +64,7 @@ public static class WebApplicationBuilderExtension
         builder.Logging.ClearProviders();
         builder.Logging.AddSerilog(_logger);
         builder.Host.UseSerilog();
+
+        return _logger;
     }
 }

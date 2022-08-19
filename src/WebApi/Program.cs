@@ -12,8 +12,9 @@ public static class Program
         {
             Console.WriteLine($"Starting up, time = {DateTime.UtcNow:s}");
             var builder = WebApplication.CreateBuilder(args);
-            builder.RegisterSerilog();
-            builder.ConfigureServices();
+            var logger = builder.RegisterSerilog();
+            Log.Logger.Information($"Starting up, time = {DateTime.UtcNow:s}");
+            builder.ConfigureServices(logger);
             builder.ConfigureApp();
         }
         catch (Exception ex)
@@ -34,7 +35,7 @@ public static class Program
             Console.WriteLine($"Shutting down, time = {DateTime.UtcNow:s}");
             Console.ResetColor();
 
-            Log.Logger.Information("Shutting down, time = {DateTime.UtcNow:s}");
+            Log.Logger.Information($"Shutting down, time = {DateTime.UtcNow:s}");
         }
     }
 }
