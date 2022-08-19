@@ -28,12 +28,16 @@
           <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
         </PackageReference>
         <PackageReference Include="Serilog.AspNetCore" Version="6.0.1" />
+        <PackageReference Include="Serilog.Enrichers.Environment" Version="2.2.0" />
+        <PackageReference Include="Serilog.Enrichers.Process" Version="2.0.2" />
+        <PackageReference Include="Serilog.Enrichers.Thread" Version="3.1.0" />
         <PackageReference Include="Swashbuckle.AspNetCore" Version="6.2.3" />
         <PackageReference Include="Swashbuckle.AspNetCore.Filters" Version="7.0.4" />
     </ItemGroup>
 
     <ItemGroup>
       <Folder Include="Common\Attributes" />
+      <Folder Include="Common\Bases" />
       <Folder Include="Common\Filters" />
       <Folder Include="Common\Helpers" />
       <Folder Include="Endpoints\Accounts\Dtos\Responses" />

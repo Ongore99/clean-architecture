@@ -1,6 +1,4 @@
-﻿using Hellang.Middleware.ProblemDetails;
-using Serilog;
-using Serilog.Events;
+﻿using Serilog;
 using WebApi.Common.Extensions.DomainServices;
 using WebApi.Common.Extensions.EfServices;
 using WebApi.Common.Extensions.ErrorHandlingServices;
@@ -43,6 +41,7 @@ public static class WebApplicationBuilderExtension
 
         app.UseLocalization();
         app.UseHttpsRedirection();
+        app.UseSerilogRequestLogging();
         
         app.UseAuthorization();
         app.MapControllers();
@@ -54,15 +53,13 @@ public static class WebApplicationBuilderExtension
 
     internal static void RegisterSerilog(this WebApplicationBuilder builder)
     {
-        Console.WriteLine($"Starting up, time = {DateTime.UtcNow:s}");
-        Log.Logger = new LoggerConfiguration()
-            .MinimumLevel.Debug()
-            .MinimumLevel.Override("Microsoft", LogEventLevel.Information)
-            .Enrich.FromLogContext()
-            .WriteTo.Console()
+        var _logger = new LoggerConfiguration()
+            .ReadFrom.Configuration(builder.Configuration)
             .CreateLogger();
 
-        builder.Host.UseSerilog((ctx, lc) => lc
-            .WriteTo.Console());
+        Log.Logger = _logger;
+        builder.Logging.ClearProviders();
+        builder.Logging.AddSerilog(_logger);
+        builder.Host.UseSerilog();
     }
 }

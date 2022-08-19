@@ -1,3 +1,5 @@
+using Serilog;
+using Serilog.Core;
 using WebApi.Common.Extensions;
 
 namespace WebApi;
@@ -24,12 +26,15 @@ public static class Program
             
             Console.ForegroundColor = ConsoleColor.Red;
             Console.WriteLine($"Application start-up failed. Exception = '{ex.Message}'");
+            Log.Logger.Error(ex, "Application start-up failed.");
         }
         finally
         {
             Console.ForegroundColor = ConsoleColor.Green;
             Console.WriteLine($"Shutting down, time = {DateTime.UtcNow:s}");
             Console.ResetColor();
+
+            Log.Logger.Information("Shutting down, time = {DateTime.UtcNow:s}");
         }
     }
 }

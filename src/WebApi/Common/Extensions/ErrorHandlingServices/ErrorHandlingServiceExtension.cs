@@ -15,10 +15,12 @@ public static class ErrorHandlingServiceExtension
         services.AddProblemDetails(opt =>
         {
             opt.IncludeExceptionDetails = (con,action) => env.IsDevelopment();
+            
             opt.MapToStatusCode<NotFoundException>((int) HttpStatusCode.NotFound);
             opt.Map<ValidationException>(x => x.ToValidationProblemDetails());
             opt.MapToStatusCode<AuthenticationCustomException>((int) HttpStatusCode.Unauthorized);
             opt.MapToStatusCode<AuthorizationException>((int) HttpStatusCode.Forbidden);
+            opt.MapToStatusCode<DomainException>((int) HttpStatusCode.BadRequest);
             opt.MapToStatusCode<Exception>((int) HttpStatusCode.InternalServerError);
         });
     }
