@@ -31,7 +31,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         
         if (entity is null)
         {
-            throw new NotFoundException(_localizer[ResxKey.NotFoundText, typeof(TE).ToString()]);
+            throw new NotFoundException(_localizer[ResxKey.NotFoundText, typeof(TE).Name]);
         }
 
         return entity;
@@ -48,10 +48,9 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     public async Task<T> FirstAsync(Expression<Func<T, bool>> expression)
     {
         var entity = await RepositoryContext.Set<T>().FirstOrDefaultAsync(expression);
-        
         if (entity is null)
         {
-            throw new NotFoundException(_localizer[ResxKey.NotFoundText, typeof(T).ToString()]);
+            throw new NotFoundException(_localizer[ResxKey.NotFoundText, typeof(T).Name]);
         }
         
         return entity;

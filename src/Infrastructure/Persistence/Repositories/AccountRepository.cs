@@ -13,5 +13,5 @@ public class AccountRepository : BaseRepository<Account>, IAccountRepository
     }
 
     public async Task<Account> GetUserAccount(int userId, int accountId) => 
-        await FirstAsync(x => x.Id == accountId && x.UserId == userId);
+        await FirstAsync(x => x.Id == accountId && x.CustomerId == userId);
 }

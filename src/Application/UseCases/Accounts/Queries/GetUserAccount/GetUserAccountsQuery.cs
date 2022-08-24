@@ -21,7 +21,8 @@ public class GetUserAccountsHandler : IRequestHandler<GetUserAccountsQuery, IQue
     public async Task<IQueryable<UserAccountsGetOut>> Handle(GetUserAccountsQuery request, CancellationToken cancellationToken)
     {
         var accounts = await _baseRepository
-            .FindByConditionToType<UserAccountsGetOut>(x => x.UserId == request.UserId);
+            .FindByConditionToType<UserAccountsGetOut>(x => x.CustomerId == request.UserId);
+        
         
         return accounts;
     }

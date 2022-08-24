@@ -7,7 +7,6 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <Folder Include="Common\Bases" />
       <Folder Include="Validations" />
     </ItemGroup>
 
@@ -20,6 +19,7 @@
     <ItemGroup>
       <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.en-us.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
+        <DependentUpon>SharedResource.resx</DependentUpon>
       </EmbeddedResource>
       <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
@@ -28,6 +28,7 @@
       </EmbeddedResource>
       <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.ru-ru.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
+        <DependentUpon>SharedResource.resx</DependentUpon>
       </EmbeddedResource>
     </ItemGroup>
 

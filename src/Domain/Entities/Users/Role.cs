@@ -2,7 +2,7 @@
 
 namespace Domain.Entities.Users;
 
-public class Role: IdentityRole
+public class Role : IdentityRole<long>
 {
-    public ICollection<UserRole> Users { get; set; }
+    public ICollection<UserRole> UserRoles { get; set; }
 }

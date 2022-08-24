@@ -10,7 +10,6 @@
       <Folder Include="Common\Attributes" />
       <Folder Include="Common\Bases" />
       <Folder Include="Common\Constants" />
-      <Folder Include="Common\Extensions" />
       <Folder Include="Common\Helpers" />
       <Folder Include="Common\Resources" />
       <Folder Include="Files" />

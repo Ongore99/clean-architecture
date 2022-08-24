@@ -14,7 +14,7 @@ public static class SeedAccountExtension
                 AccountStatusId = 1,
                 AccountTypeId = 1,
                 Description = "Description",
-                UserId = 1
+                CustomerId = 1
             },
             new()
             {
@@ -22,7 +22,7 @@ public static class SeedAccountExtension
                 AccountStatusId = 1,
                 AccountTypeId = 1,
                 Description = "Some Description",
-                UserId = 1
+                CustomerId = 1
             },
             new()
             {
@@ -30,7 +30,7 @@ public static class SeedAccountExtension
                 AccountStatusId = 1,
                 AccountTypeId = 1,
                 Description = "One More Description",
-                UserId = 1
+                CustomerId = 1
             }
         };
 
