@@ -2,6 +2,7 @@ using Domain.Common.Contracts;
 using Domain.Entities.Accounts;
 using Domain.Services.Interfaces;
 using MediatR;
+using Microsoft.EntityFrameworkCore;
 
 namespace Core.UseCases.Accounts.Commands.Withdraw;
 
@@ -28,7 +29,9 @@ public class WithdrawHandler : IRequestHandler<WithdrawCommand, Account>
     public async Task<Account> Handle(WithdrawCommand cmd, CancellationToken cancellationToken)
     {
         var account = await _accountRepository.GetUserAccount(cmd.UserId, cmd.AccountId);
-
+        var test = (await _accountRepository
+            .FindByCondition(x => x.IsDeleted))
+            .Include(x => x.Customer).;
         await _accountService.Withdraw(account, cmd.Balance);
         await _accountRepository.Update(account, true);
         

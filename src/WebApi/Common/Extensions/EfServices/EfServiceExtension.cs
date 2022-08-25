@@ -22,12 +22,12 @@ public static class EfServiceExtension
         context.Database.Migrate();
     }
     
-    internal static void Seed(this IApplicationBuilder app)
+    internal static async Task Seed(this IApplicationBuilder app)
     {
         using var scope = app.ApplicationServices.CreateScope();
         var context = scope.ServiceProvider.GetRequiredService<AppDbContext>();
 
-        context.SeedData();
+        await context.SeedData();
     }
     
 }

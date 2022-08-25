@@ -6,7 +6,7 @@ namespace WebApi;
 
 public static class Program
 {
-    public static void Main(string[] args)
+    public static async Task Main(string[] args)
     {
         try
         {
@@ -15,7 +15,7 @@ public static class Program
             var logger = builder.RegisterSerilog();
             Log.Logger.Information($"Starting up, time = {DateTime.UtcNow:s}");
             builder.ConfigureServices(logger);
-            builder.ConfigureApp();
+            await builder.ConfigureApp();
         }
         catch (Exception ex)
         {

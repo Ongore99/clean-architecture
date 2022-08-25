@@ -32,7 +32,7 @@ public static class WebApplicationBuilderExtension
         services.RegisterDomainServices(configuration);
     }
 
-    internal static void ConfigureApp(this WebApplicationBuilder builder)
+    internal static async Task ConfigureApp(this WebApplicationBuilder builder)
     {
         var app = builder.Build();
         var configuration = builder.Configuration;
@@ -50,8 +50,8 @@ public static class WebApplicationBuilderExtension
         app.MapControllers();
 
         app.AutoMigrateDb();
-        app.Seed();
-        app.Run();
+        await app.Seed();
+        await app.RunAsync();
     }
 
     internal static Logger RegisterSerilog(this WebApplicationBuilder builder)

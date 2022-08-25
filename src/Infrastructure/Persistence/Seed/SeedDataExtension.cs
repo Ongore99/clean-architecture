@@ -6,8 +6,9 @@ public static class SeedDataExtension
 {
     public static async Task SeedData(this AppDbContext dbContext)
     {
+        await dbContext.SeedEnums();
+        await dbContext.SeedUser();
         await dbContext.SeedAccount();
-        dbContext.SeedEnums();
-        await dbContext.BulkSaveChangesAsync();
+        await dbContext.SaveChangesAsync();
     }
 }

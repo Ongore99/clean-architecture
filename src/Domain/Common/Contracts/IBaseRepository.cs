@@ -18,7 +18,7 @@ public interface  IBaseRepository<T> where T : class
     
     Task<TD?> ByIdToTypeAsync<TE, TD>(TE id) where TD : class ;
     
-    Task CreateAsync(T entity, bool save = false);
+    Task<T> CreateAsync(T entity, bool save = false);
     
     Task Update(T entity, bool save = false);
     

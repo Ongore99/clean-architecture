@@ -6,15 +6,15 @@ namespace Infrastructure.Persistence.Seed;
 
 public static class SeedEnumExtension
 {
-    public static void SeedEnums(this AppDbContext dbContext)
+    public static async Task SeedEnums(this AppDbContext dbContext)
     {
-        dbContext.AccountTypes.AddOrUpdateEnumValues<AccountType, AccountTypeEnum>(
+        await dbContext.AccountTypes.AddOrUpdateEnumValues<AccountType, AccountTypeEnum>(
             @enum => new AccountType(@enum));
-        dbContext.TransactionStatuses.AddOrUpdateEnumValues<TransactionStatus, TransactionStatusEnum>(
+        await dbContext.TransactionStatuses.AddOrUpdateEnumValues<TransactionStatus, TransactionStatusEnum>(
             @enum => new TransactionStatus(@enum));
-        dbContext.AccountStatuses.AddOrUpdateEnumValues<AccountStatus, AccountStatusEnum>(
+        await dbContext.AccountStatuses.AddOrUpdateEnumValues<AccountStatus, AccountStatusEnum>(
             @enum => new AccountStatus(@enum));
-        dbContext.TransactionsTypes.AddOrUpdateEnumValues<TransactionType, TransactionTypeEnum>(
+        await dbContext.TransactionsTypes.AddOrUpdateEnumValues<TransactionType, TransactionTypeEnum>(
             @enum => new TransactionType(@enum));
     }
 }

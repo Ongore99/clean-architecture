@@ -2,10 +2,12 @@ using System.Linq.Expressions;
 using Domain.Common.Constants;
 using Domain.Common.Contracts;
 using Domain.Common.Exceptions;
+using Domain.Common.Interfaces;
 using Domain.Common.Resources.SharedResource;
 using EFCore.BulkExtensions;
 using Mapster;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Query;
 using Microsoft.Extensions.Localization;
 
 namespace Infrastructure.Persistence.Repositories.Base;
@@ -66,16 +68,34 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     public Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression) => 
         Task.FromResult(RepositoryContext.Set<T>().Where(expression).AsNoTracking());
     
+    public IQueryable<T> Include(params Expression<Func<T, object>>[] includes)
+    {
+        IIncludableQueryable<T, object> query = null;
+
+        if(includes.Length > 0)
+        {
+            query = RepositoryContext.Set<T>().Include(includes[0]);
+        }
+        for (int queryIndex = 1; queryIndex < includes.Length; ++queryIndex)
+        {
+            query = query!.Include(includes[queryIndex]);
+        }
+
+        return query == null ? RepositoryContext.Set<T>() : query;
+    }
+    
     public Task<IQueryable<TE>> FindByConditionToType<TE> (Expression<Func<T, bool>> expression) => 
         Task.FromResult(RepositoryContext.Set<T>().Where(expression).AsNoTracking().ProjectToType<TE>());
 
-    public async Task CreateAsync(T entity, bool save = false)
+    public async Task<T> CreateAsync(T entity, bool save = false)
     {
         await RepositoryContext.Set<T>().AddAsync(entity);
         if (save)
         {
             await SaveAsync();
         }
+
+        return entity;
     }
 
     public async Task Update(T entity, bool save = false)
@@ -95,7 +115,7 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
            await SaveAsync();
        }
     }
-    
+
     public async Task BulkUpdateAsync(IEnumerable<T> entities) => await RepositoryContext.Set<T>().BatchUpdateAsync(entities);
 
     public async Task BulkInsertAsync(IList<T> entities) => await RepositoryContext.BulkInsertAsync(entities, 
@@ -121,4 +141,5 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     public async Task SaveAsync() => await RepositoryContext.SaveChangesAsync();
     
     public async Task BulkSaveAsync() => await RepositoryContext.BulkSaveChangesAsync();
+
 }
