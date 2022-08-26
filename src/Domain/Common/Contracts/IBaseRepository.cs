@@ -1,4 +1,5 @@
 using System.Linq.Expressions;
+using Microsoft.EntityFrameworkCore.Query;
 
 namespace Domain.Common.Contracts;
 
@@ -11,8 +12,6 @@ public interface  IBaseRepository<T> where T : class
     Task<IQueryable<TD>> FindAllToType<TE, TD>(TE id) where TD : class;
     
     Task<T> FirstAsync(Expression<Func<T, bool>> expression);
-    
-    Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression);
 
     Task<IQueryable<TE>> FindByConditionToType<TE>(Expression<Func<T, bool>> expression);
     
@@ -37,4 +36,9 @@ public interface  IBaseRepository<T> where T : class
     Task SaveAsync();
 
     Task BulkSaveAsync();
+
+    IQueryable<T> FindByCondition(Expression<Func<T, bool>> predicate, 
+        Func<IQueryable<T>, IOrderedQueryable<T>> orderBy = null,
+        Func<IQueryable<T>, IIncludableQueryable<T, object>> include = null, 
+        bool disableTracking = true, bool ignoreQueryFilters = false);
 }

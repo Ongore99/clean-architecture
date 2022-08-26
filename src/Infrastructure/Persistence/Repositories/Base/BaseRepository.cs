@@ -13,23 +13,22 @@ using Microsoft.Extensions.Localization;
 namespace Infrastructure.Persistence.Repositories.Base;
 
 // TODO: Add As No tracking
-public class BaseRepository<T> : IBaseRepository<T> where T : class
+public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
 {
     private readonly IStringLocalizer<SharedResource> _localizer;
-    
+    protected readonly DbSet<TEntity> _dbSet;
     private AppDbContext RepositoryContext { get; set; }
     
-    public bool WithTracking { get; set; } = false;
-
     public BaseRepository(AppDbContext repositoryContext, IStringLocalizer<SharedResource> _localizer)
     {
         this._localizer = _localizer;
         RepositoryContext = repositoryContext;
+        _dbSet = repositoryContext.Set<TEntity>();
     }
 
-    public async Task<T> ByIdAsync<TE>(TE id)
+    public async Task<TEntity> ByIdAsync<TE>(TE id)
     { 
-        var entity = await RepositoryContext.Set<T>().FindAsync(id);
+        var entity = await RepositoryContext.Set<TEntity>().FindAsync(id);
         
         if (entity is null)
         {
@@ -40,56 +39,93 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
     }
     
     public async Task<TD?> ByIdToTypeAsync<TE, TD>(TE id) where TD : class 
-        =>  (await RepositoryContext.Set<T>().FindAsync(id))?.Adapt<TD>();
+        =>  (await RepositoryContext.Set<TEntity>().FindAsync(id))?.Adapt<TD>();
     
-    public Task<IQueryable<T>> FindAll() => Task.FromResult(RepositoryContext.Set<T>().AsNoTracking());
+    public Task<IQueryable<TEntity>> FindAll() => Task.FromResult(RepositoryContext.Set<TEntity>().AsNoTracking());
     
     public Task<IQueryable<TD>> FindAllToType<TE, TD>(TE id) where TD : class 
-        => Task.FromResult(RepositoryContext.Set<T>().AsNoTracking().ProjectToType<TD>());
+        => Task.FromResult(RepositoryContext.Set<TEntity>().AsNoTracking().ProjectToType<TD>());
 
-    public async Task<T> FirstAsync(Expression<Func<T, bool>> expression)
+    public async Task<TEntity> FirstAsync(Expression<Func<TEntity, bool>> expression)
     {
-        var entity = await RepositoryContext.Set<T>().FirstOrDefaultAsync(expression);
+        var entity = await RepositoryContext.Set<TEntity>().FirstOrDefaultAsync(expression);
         if (entity is null)
         {
-            throw new NotFoundException(_localizer[ResxKey.NotFoundText, typeof(T).Name]);
+            throw new NotFoundException(_localizer[ResxKey.NotFoundText, typeof(TEntity).Name]);
         }
         
         return entity;
     }
-    
-    public async Task<T?> FirstOrDefaultAsync(Expression<Func<T, bool>> expression)
+
+    public async Task<TEntity?> FirstOrDefaultAsync(Expression<Func<TEntity, bool>> expression)
     {
-        var entity = await RepositoryContext.Set<T>().FirstOrDefaultAsync(expression);
+        var entity = await RepositoryContext.Set<TEntity>().FirstOrDefaultAsync(expression);
         
         return entity;
     }
-    
-    public Task<IQueryable<T>> FindByCondition(Expression<Func<T, bool>> expression) => 
-        Task.FromResult(RepositoryContext.Set<T>().Where(expression).AsNoTracking());
-    
-    public IQueryable<T> Include(params Expression<Func<T, object>>[] includes)
+
+    public IQueryable<TEntity> FindByCondition(Expression<Func<TEntity, bool>> predicate, 
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null, 
+        bool disableTracking = true, 
+        bool ignoreQueryFilters = false)
     {
-        IIncludableQueryable<T, object> query = null;
+        IQueryable<TEntity> query = _dbSet;
+
+        if (disableTracking)
+        {
+            query = query.AsNoTracking();
+        }
+
+        if (include != null)
+        {
+            query = include(query);
+        }
+
+        if (predicate != null)
+        {
+            query = query.Where(predicate);
+        }
+
+        if (ignoreQueryFilters)
+        {
+            query = query.IgnoreQueryFilters();
+        }
+
+        if (orderBy != null)
+        {
+            return orderBy(query);
+        }
+        else
+        {
+            return query;
+        }
+
+    }
+    
+    
+    public IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includes)
+    {
+        IIncludableQueryable<TEntity, object> query = null;
 
         if(includes.Length > 0)
         {
-            query = RepositoryContext.Set<T>().Include(includes[0]);
+            query = RepositoryContext.Set<TEntity>().Include(includes[0]);
         }
         for (int queryIndex = 1; queryIndex < includes.Length; ++queryIndex)
         {
             query = query!.Include(includes[queryIndex]);
         }
 
-        return query == null ? RepositoryContext.Set<T>() : query;
+        return query == null ? RepositoryContext.Set<TEntity>() : query;
     }
     
-    public Task<IQueryable<TE>> FindByConditionToType<TE> (Expression<Func<T, bool>> expression) => 
-        Task.FromResult(RepositoryContext.Set<T>().Where(expression).AsNoTracking().ProjectToType<TE>());
+    public Task<IQueryable<TE>> FindByConditionToType<TE> (Expression<Func<TEntity, bool>> expression) => 
+        Task.FromResult(RepositoryContext.Set<TEntity>().Where(expression).AsNoTracking().ProjectToType<TE>());
 
-    public async Task<T> CreateAsync(T entity, bool save = false)
+    public async Task<TEntity> CreateAsync(TEntity entity, bool save = false)
     {
-        await RepositoryContext.Set<T>().AddAsync(entity);
+        await RepositoryContext.Set<TEntity>().AddAsync(entity);
         if (save)
         {
             await SaveAsync();
@@ -98,41 +134,41 @@ public class BaseRepository<T> : IBaseRepository<T> where T : class
         return entity;
     }
 
-    public async Task Update(T entity, bool save = false)
+    public async Task Update(TEntity entity, bool save = false)
     {
-        RepositoryContext.Set<T>().Update(entity);
+        RepositoryContext.Set<TEntity>().Update(entity);
         if (save)
         {
             await SaveAsync();
         }
     }
 
-    public async Task Delete(T entity, bool save = false)
+    public async Task Delete(TEntity entity, bool save = false)
     {
-       RepositoryContext.Set<T>().Remove(entity);
+       RepositoryContext.Set<TEntity>().Remove(entity);
        if (save)
        {
            await SaveAsync();
        }
     }
 
-    public async Task BulkUpdateAsync(IEnumerable<T> entities) => await RepositoryContext.Set<T>().BatchUpdateAsync(entities);
+    public async Task BulkUpdateAsync(IEnumerable<TEntity> entities) => await RepositoryContext.Set<TEntity>().BatchUpdateAsync(entities);
 
-    public async Task BulkInsertAsync(IList<T> entities) => await RepositoryContext.BulkInsertAsync(entities, 
+    public async Task BulkInsertAsync(IList<TEntity> entities) => await RepositoryContext.BulkInsertAsync(entities, 
         new BulkConfig()
         {
             SetOutputIdentity = true
         });
     
-    public async Task BulkDeleteAsync(IList<T> entities) => await RepositoryContext.BulkDeleteAsync(entities);
+    public async Task BulkDeleteAsync(IList<TEntity> entities) => await RepositoryContext.BulkDeleteAsync(entities);
     
-    public async Task BulkUpsert(IList<T> entities) => await RepositoryContext.BulkInsertOrUpdateAsync(entities,  
+    public async Task BulkUpsert(IList<TEntity> entities) => await RepositoryContext.BulkInsertOrUpdateAsync(entities,  
         new BulkConfig()
         {
             SetOutputIdentity = true
         });
     
-    public async Task BulkUpsertOrDelete(IList<T> entities) => await RepositoryContext.BulkInsertOrUpdateOrDeleteAsync(entities,
+    public async Task BulkUpsertOrDelete(IList<TEntity> entities) => await RepositoryContext.BulkInsertOrUpdateOrDeleteAsync(entities,
         new BulkConfig()
         {
             SetOutputIdentity = true
