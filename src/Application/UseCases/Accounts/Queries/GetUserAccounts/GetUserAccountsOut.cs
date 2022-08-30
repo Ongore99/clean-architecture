@@ -1,4 +1,4 @@
-namespace Core.UseCases.Accounts.Queries.GetUserAccount;
+namespace Core.UseCases.Accounts.Queries.GetUserAccounts;
 
 public class UserAccountsGetOut
 {

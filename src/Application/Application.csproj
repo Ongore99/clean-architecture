@@ -9,7 +9,6 @@
 
     <ItemGroup>
       <Folder Include="Common\Attributes" />
-      <Folder Include="Common\Bases" />
       <Folder Include="Common\Behaviours" />
       <Folder Include="Common\Constants" />
       <Folder Include="Common\Exceptions" />

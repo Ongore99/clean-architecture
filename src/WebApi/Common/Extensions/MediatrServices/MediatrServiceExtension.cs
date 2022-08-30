@@ -1,5 +1,5 @@
 using System.Reflection;
-using Core.UseCases.Accounts.Queries.GetUserAccount;
+using Core.UseCases.Accounts.Queries.GetUserAccounts;
 using MediatR;
 
 namespace WebApi.Common.Extensions.MediatrServices;

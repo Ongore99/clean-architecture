@@ -5,28 +5,28 @@ namespace Infrastructure.Common.Extensions;
     
 public static class DbSetExtensions
 {
-    public static async Task AddOrUpdateEnumValues<T, TEnum>(this DbSet<T> dbSet, Func<TEnum, T> converter)
-        where T : class, IIdHas<int>
-    {
-        var enums = Enum.GetValues(typeof(TEnum))
-            .Cast<object>()
-            .Select(value => converter((TEnum) value))
-            .ToList();
-        
-        foreach (var e in enums)
+        public static async Task AddOrUpdateEnumValues<T, TEnum>(this DbSet<T> dbSet, Func<TEnum, T> converter)
+            where T : class, IIdHas<int>
         {
-            var foundEnum = await dbSet
-                .AsNoTracking()
-                .FirstOrDefaultAsync(x => x.Id == e.Id);
+            var enums = Enum.GetValues(typeof(TEnum))
+                .Cast<object>()
+                .Select(value => converter((TEnum) value))
+                .ToList();
             
-            if (foundEnum == null)
+            foreach (var e in enums)
             {
-                await dbSet.AddAsync(e);
+                var foundEnum = await dbSet
+                    .AsNoTracking()
+                    .FirstOrDefaultAsync(x => x.Id == e.Id);
+                
+                if (foundEnum == null)
+                {
+                    await dbSet.AddAsync(e);
+                }
+                else
+                {
+                    dbSet.Update(e);
+                }
             }
-            else
-            {
-                dbSet.Update(e);
-            }
-        }
-    }  
+        }  
 }

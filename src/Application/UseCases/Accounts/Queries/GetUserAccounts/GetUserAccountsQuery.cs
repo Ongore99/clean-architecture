@@ -2,9 +2,9 @@ using Domain.Common.Contracts;
 using Domain.Entities.Accounts;
 using MediatR;
 
-namespace Core.UseCases.Accounts.Queries.GetUserAccount;
+namespace Core.UseCases.Accounts.Queries.GetUserAccounts;
 
-public class GetUserAccountsQuery: IRequest<IQueryable<UserAccountsGetOut>>
+public class GetUserAccountsQuery : IRequest<IQueryable<UserAccountsGetOut>>
 {
     public int UserId { get; set; }
 }
@@ -18,12 +18,13 @@ public class GetUserAccountsHandler : IRequestHandler<GetUserAccountsQuery, IQue
         _baseRepository = baseRepository;
     }
 
-    public async Task<IQueryable<UserAccountsGetOut>> Handle(GetUserAccountsQuery request, CancellationToken cancellationToken)
+    public async Task<IQueryable<UserAccountsGetOut>> Handle(GetUserAccountsQuery request,
+        CancellationToken cancellationToken)
     {
         var accounts = await _baseRepository
-            .FindByConditionToType<UserAccountsGetOut>(x => x.CustomerId == request.UserId);
-        
-        
+            .FindByCondition<UserAccountsGetOut>(x => x.CustomerId == request.UserId);
+
+
         return accounts;
     }
 }

@@ -1,6 +1,6 @@
 ﻿using System.Net.Mime;
 using Core.UseCases.Accounts.Commands.Withdraw;
-using Core.UseCases.Accounts.Queries.GetUserAccount;
+using Core.UseCases.Accounts.Queries.GetUserAccounts;
 using Domain.Entities.Accounts;
 using FluentValidation;
 using Mapster;

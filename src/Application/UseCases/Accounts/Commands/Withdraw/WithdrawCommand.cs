@@ -1,12 +1,10 @@
 using Domain.Common.Contracts;
-using Domain.Entities.Accounts;
 using Domain.Services.Interfaces;
 using MediatR;
-using Microsoft.EntityFrameworkCore;
 
 namespace Core.UseCases.Accounts.Commands.Withdraw;
 
-public class WithdrawCommand : IRequest<Account>
+public class WithdrawCommand : IRequest<WithdrawAccountOut>
 {
     public int UserId { get; set; }
     
@@ -15,7 +13,7 @@ public class WithdrawCommand : IRequest<Account>
     public int AccountId { get; set; }
 }
 
-public class WithdrawHandler : IRequestHandler<WithdrawCommand, Account>
+public class WithdrawHandler : IRequestHandler<WithdrawCommand, WithdrawAccountOut>
 {
     private readonly IAccountService _accountService;
     private readonly IUnitOfWork _unit;
@@ -26,7 +24,7 @@ public class WithdrawHandler : IRequestHandler<WithdrawCommand, Account>
         _unit = unit;
     }
 
-    public async Task<Account> Handle(WithdrawCommand cmd, CancellationToken cancellationToken)
+    public async Task<WithdrawAccountOut> Handle(WithdrawCommand cmd, CancellationToken cancellationToken)
     {
         var account = await _unit.AccountRepository
             .GetUserAccount(cmd.UserId, cmd.AccountId);
@@ -34,6 +32,8 @@ public class WithdrawHandler : IRequestHandler<WithdrawCommand, Account>
         await _accountService.Withdraw(account, cmd.Balance);
         await _unit.AccountRepository.Update(account, true);
         
-        return account;
+        var withdrawAccount = WithdrawAccountOut.MapFrom(account);
+        
+        return withdrawAccount;
     }
 }

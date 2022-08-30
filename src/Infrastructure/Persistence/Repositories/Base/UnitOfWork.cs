@@ -11,7 +11,7 @@ public class UnitOfWork : IUnitOfWork
     private readonly IStringLocalizer<SharedResource> _localizer;
     
     private IAccountRepository? _accountRepository;
-    private BaseRepository<Transaction>? transactionRepository;
+    private BaseRepository<Transaction>? _transactionRepository;
     private bool disposed = false;
 
 
@@ -34,8 +34,8 @@ public class UnitOfWork : IUnitOfWork
     {
         get
         {
-            transactionRepository ??= new BaseRepository<Transaction>(_context, _localizer);
-            return transactionRepository;
+            _transactionRepository ??= new BaseRepository<Transaction>(_context, _localizer);
+            return _transactionRepository;
         }
     }
 

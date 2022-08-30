@@ -1,6 +1,7 @@
 ﻿using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
 using Domain.Entities.Users;
+using Infrastructure.Common.Extensions;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
@@ -43,5 +44,7 @@ public class AppDbContext : IdentityDbContext<User, Role, long,
         
         foreach (var x in builder.Model.GetEntityTypes().SelectMany(e => e.GetForeignKeys()))
             x.DeleteBehavior = DeleteBehavior.ClientCascade;
+        
+        builder.AddIsDeletedQuery();
     }
 }
