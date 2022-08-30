@@ -54,7 +54,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
     /// <param name="disableTracking"><c>false</c> to disable changing tracking; otherwise, <c>false</c>. Default to <c>false</c>.</param>
     /// <param name="ignoreQueryFilters">Ignore query filters</param>
     /// <remarks>This method default no-tracking query.</remarks>
-    public async Task<TDest> FirstToTypeAsync<TDest>(Expression<Func<TEntity, bool>> predicate = null,
+    public async Task<TDest> FirstToAsync<TDest>(Expression<Func<TEntity, bool>> predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
         bool disableTracking = false, bool ignoreQueryFilters = false)
@@ -104,7 +104,8 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
         Expression<Func<TEntity, bool>> predicate = null,
         Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
         Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null,
-        bool disableTracking = false, bool ignoreQueryFilters = false)
+        bool disableTracking = false, 
+        bool ignoreQueryFilters = false)
     {
         IQueryable<TEntity> query = _dbSet;
 

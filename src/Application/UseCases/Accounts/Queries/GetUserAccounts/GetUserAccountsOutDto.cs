@@ -1,6 +1,6 @@
 namespace Core.UseCases.Accounts.Queries.GetUserAccounts;
 
-public class UserAccountsGetOut
+public class UserAccountsGetOutDto
 {
     public long Id { get; set; }
 

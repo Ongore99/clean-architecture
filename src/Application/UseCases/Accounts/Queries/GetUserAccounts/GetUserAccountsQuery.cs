@@ -4,12 +4,12 @@ using MediatR;
 
 namespace Core.UseCases.Accounts.Queries.GetUserAccounts;
 
-public class GetUserAccountsQuery : IRequest<IQueryable<UserAccountsGetOut>>
+public class GetUserAccountsQuery : IRequest<IQueryable<UserAccountsGetOutDto>>
 {
     public int UserId { get; set; }
 }
 
-public class GetUserAccountsHandler : IRequestHandler<GetUserAccountsQuery, IQueryable<UserAccountsGetOut>>
+public class GetUserAccountsHandler : IRequestHandler<GetUserAccountsQuery, IQueryable<UserAccountsGetOutDto>>
 {
     private readonly IBaseRepository<Account> _baseRepository;
 
@@ -18,12 +18,12 @@ public class GetUserAccountsHandler : IRequestHandler<GetUserAccountsQuery, IQue
         _baseRepository = baseRepository;
     }
 
-    public async Task<IQueryable<UserAccountsGetOut>> Handle(GetUserAccountsQuery request,
+    public async Task<IQueryable<UserAccountsGetOutDto>> Handle(GetUserAccountsQuery request,
         CancellationToken cancellationToken)
     {
-        var accounts = await _baseRepository
-            .FindByCondition<UserAccountsGetOut>(x => x.CustomerId == request.UserId);
-
+        await Task.CompletedTask;
+        var accounts = _baseRepository
+            .FindByCondition<UserAccountsGetOutDto>(x => x.CustomerId == request.UserId);
 
         return accounts;
     }

@@ -2,7 +2,7 @@ using Mapster;
 
 namespace Core.Common.Bases;
 
-public abstract class BaseDto<TSource, TDestination> : IRegister
+public abstract record BaseDto<TSource, TDestination> : IRegister
     where TDestination : class, new()
     where TSource : class, new()
 {

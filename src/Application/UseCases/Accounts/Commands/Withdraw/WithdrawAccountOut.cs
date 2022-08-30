@@ -4,7 +4,7 @@ using Domain.Entities.Accounts;
 
 namespace Core.UseCases.Accounts.Commands.Withdraw;
 
-public class WithdrawAccountOut : BaseDto<Account, WithdrawAccountOut>
+public record WithdrawAccountOut : BaseDto<Account, WithdrawAccountOut>
 {
     public long Id { get; set; }
 
@@ -19,9 +19,4 @@ public class WithdrawAccountOut : BaseDto<Account, WithdrawAccountOut>
     public string Description { get; set; }
     
     public long CustomerId { get; set; }
-    
-    public override void AddCustomMappings()
-    {
-        SetCustomMappings();
-    }
 }
