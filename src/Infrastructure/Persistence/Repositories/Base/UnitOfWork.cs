@@ -12,6 +12,8 @@ public class UnitOfWork : IUnitOfWork
     
     private IAccountRepository? _accountRepository;
     private BaseRepository<Transaction>? transactionRepository;
+    private bool disposed = false;
+
 
     public UnitOfWork(AppDbContext context, IStringLocalizer<SharedResource> localizer)
     {
@@ -47,8 +49,6 @@ public class UnitOfWork : IUnitOfWork
         await _context.SaveChangesAsync();
     }
 
-    private bool disposed = false;
-
     protected virtual void Dispose(bool disposing)
     {
         if (!disposed)
@@ -66,4 +66,19 @@ public class UnitOfWork : IUnitOfWork
         Dispose(true);
         GC.SuppressFinalize(this);
     }
+    
+    public async Task BeginTransaction()  
+    {  
+        await _context.Database.BeginTransactionAsync();  
+    } 
+    
+    public async Task CommitAsync()  
+    {  
+        await _context.Database.CommitTransactionAsync();  
+    } 
+    
+    public async Task RollbackAsync()  
+    {  
+        await _context.Database.RollbackTransactionAsync();  
+    }  
 }

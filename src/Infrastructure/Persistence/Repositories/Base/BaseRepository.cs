@@ -102,24 +102,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
         }
 
     }
-    
-    
-    public IQueryable<TEntity> Include(params Expression<Func<TEntity, object>>[] includes)
-    {
-        IIncludableQueryable<TEntity, object> query = null;
 
-        if(includes.Length > 0)
-        {
-            query = RepositoryContext.Set<TEntity>().Include(includes[0]);
-        }
-        for (int queryIndex = 1; queryIndex < includes.Length; ++queryIndex)
-        {
-            query = query!.Include(includes[queryIndex]);
-        }
-
-        return query == null ? RepositoryContext.Set<TEntity>() : query;
-    }
-    
     public Task<IQueryable<TE>> FindByConditionToType<TE> (Expression<Func<TEntity, bool>> expression) => 
         Task.FromResult(RepositoryContext.Set<TEntity>().Where(expression).AsNoTracking().ProjectToType<TE>());
 

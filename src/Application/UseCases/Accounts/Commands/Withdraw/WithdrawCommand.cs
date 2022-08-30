@@ -17,21 +17,22 @@ public class WithdrawCommand : IRequest<Account>
 
 public class WithdrawHandler : IRequestHandler<WithdrawCommand, Account>
 {
-    private readonly IAccountRepository _accountRepository;
     private readonly IAccountService _accountService;
+    private readonly IUnitOfWork _unit;
 
-    public WithdrawHandler(IAccountRepository accountRepository, IAccountService accountService)
+    public WithdrawHandler(IAccountService accountService, IUnitOfWork unit)
     {
-        _accountRepository = accountRepository;
         _accountService = accountService;
+        _unit = unit;
     }
 
     public async Task<Account> Handle(WithdrawCommand cmd, CancellationToken cancellationToken)
     {
-        var account = await _accountRepository.GetUserAccount(cmd.UserId, cmd.AccountId);
+        var account = await _unit.AccountRepository
+            .GetUserAccount(cmd.UserId, cmd.AccountId);
         
         await _accountService.Withdraw(account, cmd.Balance);
-        await _accountRepository.Update(account, true);
+        await _unit.AccountRepository.Update(account, true);
         
         return account;
     }

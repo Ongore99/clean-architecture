@@ -9,4 +9,7 @@ public interface IUnitOfWork : IDisposable
     IBaseRepository<Transaction> TransactionRepository { get; }
     void Save();
     Task SaveAsync();
+    Task BeginTransaction();
+    Task CommitAsync();
+    Task RollbackAsync();
 }
