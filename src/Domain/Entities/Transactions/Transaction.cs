@@ -8,7 +8,7 @@ public class Transaction : IIdHas<long>
 {
     public long Id { get; set; }
     
-    public DateTime Date { get; set; }
+    public DateTime Date { get; set; } = DateTime.Now;
     
     [Precision(8, 1)] 
     public decimal Amount { get; set; } 

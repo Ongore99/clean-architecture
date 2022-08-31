@@ -9,6 +9,7 @@ public static class SeedDataExtension
         await dbContext.SeedEnums();
         await dbContext.SeedUser();
         await dbContext.SeedAccount();
+        await dbContext.SeedTransaction();
         await dbContext.SaveChangesAsync();
     }
 }

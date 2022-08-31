@@ -16,9 +16,10 @@ using WebApi.Endpoints.Accounts.Dtos.SwaggeExamples;
 
 namespace WebApi.Endpoints.Accounts;
 
-[Route("accounts")]
+[Route("api/accounts")]
 [Consumes(MediaTypeNames.Application.Json)]
-public class AccountController : Controller
+[Produces(MediaTypeNames.Application.Json)]
+public class AccountController : BaseController
 {
     private readonly IMediator _mediator;
 
@@ -82,10 +83,11 @@ public class AccountController : Controller
     /// </summary>
     /// <returns>New Updated Account</returns>
     /// <response code="200">New Updated Account</response>
-    [HttpPatch("{accountId:int}")]
+    [HttpGet("{accountId:int}")]
+    [EnableQuery(PageSize = 10)]
     [ProducesDefaultResponseType(typeof(ProblemDetails))]
-    [ProducesResponseType(typeof(Account), StatusCodes.Status200OK)]
-    [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))]
+    [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)]
+    [SwaggerResponseExample(200, typeof(GetAccountResponseExamples))]
     public async Task<ActionResult<Account>> ById(
         [FromRoute] int accountId)
     {

@@ -5,6 +5,7 @@ using WebApi.Common.Extensions.EfServices;
 using WebApi.Common.Extensions.ErrorHandlingServices;
 using WebApi.Common.Extensions.FluentValidationServices;
 using WebApi.Common.Extensions.LocalizationServices;
+using WebApi.Common.Extensions.MapsterServices;
 using WebApi.Common.Extensions.MediatrServices;
 using WebApi.Common.Extensions.ODataServices;
 using WebApi.Common.Extensions.RepositoryServices;
@@ -20,8 +21,10 @@ public static class WebApplicationBuilderExtension
         var configuration = builder.Configuration;
         var env = builder.Environment;
         
+        services.AddMapster();
         services.AddFluentValidators();
         services.AddSwagger();
+        
         services.AddEndpointsApiExplorer();
         services.AddODataService();
         services.AddLocalizationService();

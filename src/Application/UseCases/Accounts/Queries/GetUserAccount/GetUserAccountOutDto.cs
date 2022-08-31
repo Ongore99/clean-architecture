@@ -1,5 +1,6 @@
 using Core.Common.Bases;
 using Domain.Entities.Accounts;
+using Domain.Entities.Transactions;
 
 namespace Core.UseCases.Accounts.Queries.GetUserAccount;
 
@@ -13,11 +14,24 @@ public record GetUserAccountOutDto : BaseDto<Account, GetUserAccountOutDto>
     
     public List<TransactionOutDto> Transactions { get; set; }
 
-    public record TransactionOutDto(long Id, decimal Amount, DateTime Date);
+    public record TransactionOutDto
+        : BaseDto<Transaction, TransactionOutDto>
+    {
+        public long Id { get; set; }
+        
+        public decimal Amount { get; set; }
+
+        public DateTime DateCreated { get; set; }
+        
+        public override void AddCustomMappings()
+        {
+            SetCustomMappings().
+                Map(x => x.DateCreated, y => y.Date);
+        }
+    }
 
     public override void AddCustomMappings()
     {
-        SetCustomMappings().
-            Map(x => x.Transactions, y => y.Transactions);
+        
     }
 }

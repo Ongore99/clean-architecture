@@ -26,8 +26,7 @@ public class GetUserAccountsHandler : IRequestHandler<GetUserAccountQuery, IQuer
         await Task.CompletedTask;
         var accounts = _unit.AccountRepository
             .FindByCondition<GetUserAccountOutDto>
-                (x => x.CustomerId == request.UserId && x.Id == request.AccountId,
-                    include: x => x.Include(y => y.Transactions));
+                (x => x.CustomerId == request.UserId && x.Id == request.AccountId);
         
         return accounts;
     }

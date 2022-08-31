@@ -21,7 +21,7 @@ public static class SwaggerServiceExtension
         {
             x.SwaggerDoc("v1", new OpenApiInfo
             {
-                Title = "ezra api",
+                Title = "Bank System Api",
                 Version = "v1",
             });
             x.DescribeAllParametersInCamelCase();
