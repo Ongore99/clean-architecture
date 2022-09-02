@@ -4,6 +4,7 @@ using Core.UseCases.Accounts.Queries.GetUserAccount;
 using Core.UseCases.Accounts.Queries.GetUserAccounts;
 using Domain.Entities.Accounts;
 using FluentValidation;
+using Gridify;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
@@ -88,8 +89,8 @@ public class AccountController : BaseController
     [ProducesDefaultResponseType(typeof(ProblemDetails))]
     [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)]
     [SwaggerResponseExample(200, typeof(GetAccountResponseExamples))]
-    public async Task<ActionResult<Account>> ById(
-        [FromRoute] int accountId)
+    public async Task<ActionResult<Paging<Account>>> ById(
+        [FromRoute] int accountId, [FromQuery] GridifyQuery q)
     {
         var query = new GetUserAccountQuery()
         {
@@ -99,6 +100,6 @@ public class AccountController : BaseController
         
         var result = await _mediator.Send(query);
         
-        return Ok(result);
+        return Ok(result.Gridify(q));
     }
 }

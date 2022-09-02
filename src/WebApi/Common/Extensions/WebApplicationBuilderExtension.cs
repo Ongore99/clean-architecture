@@ -42,7 +42,6 @@ public static class WebApplicationBuilderExtension
 
         app.UseErrorHandling();
         app.UseSwaggerUi();
-        app.UsePathBase(new PathString("/api"));
         app.UseRouting();
         
         app.UseLocalization();
