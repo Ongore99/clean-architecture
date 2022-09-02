@@ -1,4 +1,6 @@
+using System.Collections.ObjectModel;
 using Core.UseCases.Accounts.Queries.GetUserAccount;
+using Gridify;
 using Swashbuckle.AspNetCore.Filters;
 using WebApi.Endpoints.Accounts.Dtos.Requests;
 
@@ -15,12 +17,16 @@ public class GetAccountResponseExamples : IMultipleExamplesProvider<GetUserAccou
             {
                 CustomerId = 1,
                 Balance = 1,
-                Transactions = new List<GetUserAccountOutDto.TransactionOutDto>
+                Transactions = new Paging<GetUserAccountOutDto.TransactionOutDto>
                 {
-                    new()
+                    Count = 1,
+                    Data = new List<GetUserAccountOutDto.TransactionOutDto>
                     {
-                        Amount = 100.0m,
-                        DateCreated = DateTime.Now
+                        new()
+                        {
+                            Amount = 1,
+                            DateCreated = default
+                        }
                     }
                 }
             }

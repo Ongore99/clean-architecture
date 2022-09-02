@@ -18,6 +18,7 @@
     </ItemGroup>
 
     <ItemGroup>
+      <PackageReference Include="Gridify" Version="2.8.0" />
       <PackageReference Include="Mapster" Version="7.3.0" />
       <PackageReference Include="MediatR" Version="10.0.1" />
       <PackageReference Include="Microsoft.EntityFrameworkCore" Version="6.0.7" />

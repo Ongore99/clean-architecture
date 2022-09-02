@@ -1,6 +1,7 @@
 using Core.Common.Bases;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
+using Gridify;
 
 namespace Core.UseCases.Accounts.Queries.GetUserAccount;
 
@@ -12,7 +13,7 @@ public record GetUserAccountOutDto : BaseDto<Account, GetUserAccountOutDto>
     
     public decimal Balance { get; set; } = 0;
     
-    public List<TransactionOutDto> Transactions { get; set; }
+    public Paging<TransactionOutDto> Transactions { get; set; }
 
     public record TransactionOutDto
         : BaseDto<Transaction, TransactionOutDto>

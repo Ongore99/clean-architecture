@@ -89,7 +89,7 @@ public class AccountController : BaseController
     [ProducesDefaultResponseType(typeof(ProblemDetails))]
     [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)]
     [SwaggerResponseExample(200, typeof(GetAccountResponseExamples))]
-    public async Task<ActionResult<Paging<Account>>> ById(
+    public async Task<ActionResult<GetUserAccountOutDto>> ById(
         [FromRoute] int accountId, [FromQuery] GridifyQuery q)
     {
         var query = new GetUserAccountQuery()
@@ -100,6 +100,6 @@ public class AccountController : BaseController
         
         var result = await _mediator.Send(query);
         
-        return Ok(result.Gridify(q));
+        return Ok(result);
     }
 }
