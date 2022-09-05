@@ -53,7 +53,7 @@ public class AccountController : BaseController
     /// <response code="200">New Updated Account</response>
     [HttpPatch("{accountId:int}/withdraw")]
     [ProducesDefaultResponseType(typeof(ProblemDetails))]
-    [ProducesResponseType(typeof(Account), StatusCodes.Status200OK)]
+    [ProducesResponseType(typeof(WithdrawAccountOut), StatusCodes.Status200OK)]
     [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))]
     public async Task<ActionResult<Account>> Withdraw(
         [FromBody] WithdrawRequestDto dto,
@@ -85,7 +85,8 @@ public class AccountController : BaseController
     [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)]
     [SwaggerResponseExample(200, typeof(GetAccountResponseExamples))]
     public async Task<ActionResult<GetUserAccountOutDto>> ById(
-        [FromRoute] int accountId, [FromQuery] GridifyQuery query)
+        [FromRoute] int accountId, 
+        [FromQuery] GridifyQuery query)
     {
         var getUserAccountQuery = new GetUserAccountQuery()
         {
