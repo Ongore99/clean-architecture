@@ -1,3 +1,4 @@
+using System.ComponentModel.DataAnnotations.Schema;
 using Core.Common.Bases;
 using Domain.Entities.Accounts;
 using Domain.Entities.Transactions;
@@ -13,7 +14,7 @@ public record GetUserAccountOutDto : BaseDto<Account, GetUserAccountOutDto>
     
     public decimal Balance { get; set; } = 0;
     
-    public Paging<TransactionOutDto> Transactions { get; set; }
+    public QueryablePaging<TransactionOutDto> Transactions { get; set; }
 
     public record TransactionOutDto
         : BaseDto<Transaction, TransactionOutDto>
@@ -33,6 +34,7 @@ public record GetUserAccountOutDto : BaseDto<Account, GetUserAccountOutDto>
 
     public override void AddCustomMappings()
     {
-        
+        SetCustomMappings().
+            Ignore(x => x.Transactions);
     }
 }

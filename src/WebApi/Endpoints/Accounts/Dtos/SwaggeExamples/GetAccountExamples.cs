@@ -17,18 +17,15 @@ public class GetAccountResponseExamples : IMultipleExamplesProvider<GetUserAccou
             {
                 CustomerId = 1,
                 Balance = 1,
-                Transactions = new Paging<GetUserAccountOutDto.TransactionOutDto>
+                Transactions = new QueryablePaging<GetUserAccountOutDto.TransactionOutDto>(1,
+                    new List<GetUserAccountOutDto.TransactionOutDto>
                 {
-                    Count = 1,
-                    Data = new List<GetUserAccountOutDto.TransactionOutDto>
+                    new()
                     {
-                        new()
-                        {
-                            Amount = 1,
-                            DateCreated = default
-                        }
+                        Amount = 1,
+                        DateCreated = default
                     }
-                }
+                }.AsQueryable())
             }
         );
     }

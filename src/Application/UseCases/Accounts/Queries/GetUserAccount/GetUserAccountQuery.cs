@@ -1,17 +1,21 @@
 using Domain.Common.Contracts;
+using Gridify;
+using Mapster;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
 
 namespace Core.UseCases.Accounts.Queries.GetUserAccount;
 
-public class GetUserAccountQuery : IRequest<IQueryable<GetUserAccountOutDto>>
+public class GetUserAccountQuery : IRequest<GetUserAccountOutDto>
 {
+    public GridifyQuery Query { get; set; }
+    
     public int AccountId { get; set; }
     
     public int UserId { get; set; }
 }
 
-public class GetUserAccountsHandler : IRequestHandler<GetUserAccountQuery, IQueryable<GetUserAccountOutDto>>
+public class GetUserAccountsHandler : IRequestHandler<GetUserAccountQuery, GetUserAccountOutDto>
 {
     private readonly IUnitOfWork _unit;
 
@@ -20,14 +24,18 @@ public class GetUserAccountsHandler : IRequestHandler<GetUserAccountQuery, IQuer
         _unit = unitOfWork;
     }
 
-    public async Task<IQueryable<GetUserAccountOutDto>> Handle(GetUserAccountQuery request,
+    public async Task<GetUserAccountOutDto> Handle(GetUserAccountQuery request,
         CancellationToken cancellationToken)
     {
-        await Task.CompletedTask;
-        var accounts = _unit.AccountRepository
-            .FindByCondition<GetUserAccountOutDto>
+        var account = await _unit.AccountRepository
+            .FirstToAsync<GetUserAccountOutDto>
                 (x => x.CustomerId == request.UserId && x.Id == request.AccountId);
         
-        return accounts;
+        account.Transactions = _unit.TransactionRepository
+            .FindByCondition<GetUserAccountOutDto.TransactionOutDto>
+                (x => x.AccountId == request.AccountId)
+            .GridifyQueryable(request.Query);
+        
+        return account;
     }
 }

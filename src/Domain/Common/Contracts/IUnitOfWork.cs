@@ -6,7 +6,7 @@ public interface IUnitOfWork : IDisposable
 {
     IAccountRepository AccountRepository { get; }
     
-    IBaseRepository<Transaction> TransactionRepository { get; }
+    ITransactionRepository TransactionRepository { get; }
     void Save();
     Task SaveAsync();
     Task BeginTransaction();

@@ -85,7 +85,6 @@ public class AccountController : BaseController
     /// <returns>New Updated Account</returns>
     /// <response code="200">New Updated Account</response>
     [HttpGet("{accountId:int}")]
-    [EnableQuery(PageSize = 10)]
     [ProducesDefaultResponseType(typeof(ProblemDetails))]
     [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)]
     [SwaggerResponseExample(200, typeof(GetAccountResponseExamples))]
@@ -95,7 +94,8 @@ public class AccountController : BaseController
         var query = new GetUserAccountQuery()
         {
             AccountId = accountId,
-            UserId = UserService.GetCurrentUser()
+            UserId = UserService.GetCurrentUser(),
+            Query = q
         };
         
         var result = await _mediator.Send(query);
