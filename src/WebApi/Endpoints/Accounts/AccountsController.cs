@@ -8,7 +8,6 @@ using Gridify;
 using Mapster;
 using MediatR;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.AspNetCore.OData.Query;
 using Swashbuckle.AspNetCore.Filters;
 using WebApi.Common.Extensions;
 using WebApi.Common.Services;
@@ -32,17 +31,14 @@ public class AccountController : BaseController
     /// <summary>
     /// List of my accounts
     /// </summary>
-    [EnableQuery(PageSize = 10)]
     [HttpGet("me")]
     [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(IEnumerable<UserAccountsGetOutDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IQueryable<UserAccountsGetOutDto>>> Me()
     {
-        // TODO: REMOVE
-        var currentUserId = 1;
         var query = new GetUserAccountsQuery()
         {
-            UserId = currentUserId
+            UserId = UserService.GetCurrentUser()
         };
 
         var result = await _mediator.Send(query);
@@ -89,16 +85,16 @@ public class AccountController : BaseController
     [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)]
     [SwaggerResponseExample(200, typeof(GetAccountResponseExamples))]
     public async Task<ActionResult<GetUserAccountOutDto>> ById(
-        [FromRoute] int accountId, [FromQuery] GridifyQuery q)
+        [FromRoute] int accountId, [FromQuery] GridifyQuery query)
     {
-        var query = new GetUserAccountQuery()
+        var getUserAccountQuery = new GetUserAccountQuery()
         {
             AccountId = accountId,
             UserId = UserService.GetCurrentUser(),
-            Query = q
+            Query = query
         };
         
-        var result = await _mediator.Send(query);
+        var result = await _mediator.Send(getUserAccountQuery);
         
         return Ok(result);
     }

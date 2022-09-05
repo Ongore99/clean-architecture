@@ -1,13 +1,14 @@
-﻿using Serilog;
+﻿using Gridify;
+using Serilog;
 using Serilog.Core;
 using WebApi.Common.Extensions.DomainServices;
 using WebApi.Common.Extensions.EfServices;
 using WebApi.Common.Extensions.ErrorHandlingServices;
 using WebApi.Common.Extensions.FluentValidationServices;
+using WebApi.Common.Extensions.GridifyServices;
 using WebApi.Common.Extensions.LocalizationServices;
 using WebApi.Common.Extensions.MapsterServices;
 using WebApi.Common.Extensions.MediatrServices;
-using WebApi.Common.Extensions.ODataServices;
 using WebApi.Common.Extensions.RepositoryServices;
 using WebApi.Common.Extensions.SwaggerServices;
 
@@ -24,9 +25,9 @@ public static class WebApplicationBuilderExtension
         services.AddMapster();
         services.AddFluentValidators();
         services.AddSwagger();
-        
+        services.AddGridify(configuration);
         services.AddEndpointsApiExplorer();
-        services.AddODataService();
+        services.AddControllers();
         services.AddLocalizationService();
         services.AddErrorHandlingService(configuration, env, logger);
         services.AddMediatr();
