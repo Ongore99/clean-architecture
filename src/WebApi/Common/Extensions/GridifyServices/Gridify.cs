@@ -1,6 +1,6 @@
 namespace WebApi.Common.Extensions.GridifyServices;
 
-public class GridifySetting
+public class Gridify
 {
     public int DefaultPageSize { get; set; } = 25;
     

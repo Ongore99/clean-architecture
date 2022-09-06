@@ -6,10 +6,10 @@ public static class GridifyServiceExtension
 {
     internal static void AddGridify(this IServiceCollection services, ConfigurationManager config)
     {
-        services.Configure<GridifySetting>(
-            x => config.GetSection(nameof(GridifySetting))
+        services.Configure<Gridify>(
+            x => config.GetSection(nameof(Gridify))
             .Bind(x));
-        var settings = config.GetSection(nameof(GridifySetting)).Get<GridifySetting>();
+        var settings = config.GetSection(nameof(Gridify)).Get<Gridify>();
         
         GridifyGlobalConfiguration.EntityFrameworkCompatibilityLayer = true;
         GridifyGlobalConfiguration.CaseSensitiveMapper = false;

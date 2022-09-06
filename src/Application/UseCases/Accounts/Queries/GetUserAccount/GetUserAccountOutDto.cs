@@ -25,10 +25,19 @@ public record GetUserAccountOutDto : BaseDto<Account, GetUserAccountOutDto>
 
         public DateTime DateCreated { get; set; }
         
+        public TransactionStatusDto TransactionStatus { get; set; }
+        
         public override void AddCustomMappings()
         {
             SetCustomMappings().
                 Map(x => x.DateCreated, y => y.Date);
+        }
+
+        public record TransactionStatusDto
+        {
+            public int Id { get; set; }
+            
+            public string Name { get; set; }
         }
     }
 

@@ -21,4 +21,14 @@ public class AccountService : IAccountService
             x => x.Balance);
     }
 
+    public void Transfer(Account account, Account receiverAccount, decimal amount)
+    {
+        account.Balance -= amount;
+        receiverAccount.Balance += amount;
+
+        if (amount < 10000)
+        {
+            throw new 
+        }
+    }
 }

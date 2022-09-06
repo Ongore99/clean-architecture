@@ -32,7 +32,6 @@ public class AccountController : BaseController
     /// List of my accounts
     /// </summary>
     [HttpGet("me")]
-    [Produces(MediaTypeNames.Application.Json)]
     [ProducesResponseType(typeof(IEnumerable<UserAccountsGetOutDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IQueryable<UserAccountsGetOutDto>>> Me()
     {
@@ -61,6 +60,34 @@ public class AccountController : BaseController
         [FromServices] IValidator<WithdrawRequestDto> validator)
     {
         dto.AccountId = accountId;
+        
+        var validation = await validator.ValidateAsync(dto);
+        if (!validation.IsValid)
+        {
+            return validation.ToBadRequest();
+        }
+        
+        var command = dto.Adapt<WithdrawCommand>();
+        
+        var result = await _mediator.Send(command);
+        
+        return Ok(result);
+    }
+    
+    /// <summary>
+    /// Transfer balance from one acccount to another
+    /// </summary>
+    /// <response code="200"></response>
+    [HttpPatch("{accountId:int}/transfer")]
+    [ProducesDefaultResponseType(typeof(ProblemDetails))]
+    [ProducesResponseType(StatusCodes.Status200OK)]
+    [SwaggerRequestExample(typeof(TransferRequestDto), typeof(TransferRequestExamples))]
+    public async Task<ActionResult<Account>> Transfer(
+        [FromBody] TransferRequestDto dto,
+        [FromRoute] int accountId,
+        [FromServices] IValidator<TransferRequestDto> validator)
+    {
+        dto.AccountSenderId = accountId;
         
         var validation = await validator.ValidateAsync(dto);
         if (!validation.IsValid)
