@@ -44,5 +44,7 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
         {
             await _unit.RollbackAsync();
         }
+
+        return HttpStatusCode.OK;
     }
 }
