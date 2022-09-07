@@ -12,6 +12,8 @@ public class TransferCommand : IRequest<HttpStatusCode>
     public int AccountReceiverId { get; set; }
     
     public decimal Amount { get; set; }
+    
+    public int UserId { get; set; }
 }
 
 public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatusCode>
@@ -38,11 +40,13 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
             
             _accountService.Transfer(account, receiverAccount, cmd.Amount);
             
+            await _unit.SaveAsync();
             await _unit.CommitAsync();
         }
         catch
         {
             await _unit.RollbackAsync();
+            throw;
         }
 
         return HttpStatusCode.OK;

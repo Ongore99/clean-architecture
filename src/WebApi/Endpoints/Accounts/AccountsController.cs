@@ -1,4 +1,6 @@
-﻿using System.Net.Mime;
+﻿using System.Net;
+using System.Net.Mime;
+using Core.UseCases.Accounts.Commands.Transfer;
 using Core.UseCases.Accounts.Commands.Withdraw;
 using Core.UseCases.Accounts.Queries.GetUserAccount;
 using Core.UseCases.Accounts.Queries.GetUserAccounts;
@@ -75,14 +77,14 @@ public class AccountController : BaseController
     }
     
     /// <summary>
-    /// Transfer balance from one acccount to another
+    /// Transfer balance from one account to another
     /// </summary>
     /// <response code="200"></response>
     [HttpPatch("{accountId:int}/transfer")]
     [ProducesDefaultResponseType(typeof(ProblemDetails))]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [SwaggerRequestExample(typeof(TransferRequestDto), typeof(TransferRequestExamples))]
-    public async Task<ActionResult<Account>> Transfer(
+    public async Task<ActionResult<HttpStatusCode>> Transfer(
         [FromBody] TransferRequestDto dto,
         [FromRoute] int accountId,
         [FromServices] IValidator<TransferRequestDto> validator)
@@ -95,11 +97,11 @@ public class AccountController : BaseController
             return validation.ToBadRequest();
         }
         
-        var command = dto.Adapt<WithdrawCommand>();
+        var command = dto.Adapt<TransferCommand>();
         
         var result = await _mediator.Send(command);
         
-        return Ok(result);
+        return result;
     }
     
     /// <summary>

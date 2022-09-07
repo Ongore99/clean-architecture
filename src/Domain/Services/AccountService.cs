@@ -32,7 +32,7 @@ public class AccountService : IAccountService
         account.Balance -= amount;
         receiverAccount.Balance += amount;
 
-        if (amount < 10000)
+        if (amount >= 10000)
         {
             throw new TransferAccountLimitExceededException(amount, _localizer);
         }
