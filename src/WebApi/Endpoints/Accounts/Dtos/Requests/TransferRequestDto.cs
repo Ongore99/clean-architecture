@@ -20,6 +20,6 @@ public class TransferRequestValidator : AbstractValidator<TransferRequestDto>
         RuleFor(x => x.AccountReceiverId)
             .GreaterThan(0)
             .NotEqual(x => x.AccountSenderId);;
-        RuleFor(x => x.Amount).GreaterThan(0).LessThan(10000);
+        //RuleFor(x => x.Amount).GreaterThan(0).LessThan(10000);
     }
 }

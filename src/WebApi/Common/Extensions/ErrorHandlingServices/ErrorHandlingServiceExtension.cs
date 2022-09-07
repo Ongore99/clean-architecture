@@ -6,6 +6,7 @@ using FluentValidation.Results;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
 using Serilog.Core;
+using WebApi.Common.Bases;
 
 namespace WebApi.Common.Extensions.ErrorHandlingServices;
 
@@ -29,7 +30,16 @@ public static class ErrorHandlingServiceExtension
             opt.Map<ValidationException>(x => x.ToValidationProblemDetails());
             opt.MapToStatusCode<AuthenticationCustomException>((int) HttpStatusCode.Unauthorized);
             opt.MapToStatusCode<AuthorizationException>((int) HttpStatusCode.Forbidden);
-            opt.MapToStatusCode<DomainException>((int) HttpStatusCode.BadRequest);
+            opt.Map<DomainException>(ex => new CustomProblemDetails()
+            {
+                Title = ex.Message,
+                Status = StatusCodes.Status500InternalServerError,
+                Type = "https://httpstatuses.io/500",
+                AdditionalData = new Dictionary<string, object?>
+                {
+                    { "code", ex.Code }
+                }
+            });
         });
     }
     

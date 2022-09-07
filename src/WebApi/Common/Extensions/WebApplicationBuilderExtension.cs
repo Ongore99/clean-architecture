@@ -31,7 +31,7 @@ public static class WebApplicationBuilderExtension
         services.AddLocalizationService();
         services.AddErrorHandlingService(configuration, env, logger);
         services.AddMediatr();
-        services.AddAppDbContext(configuration);
+        services.AddAppDbContext(configuration, env);
         services.AddRepositories();
         services.RegisterDomainServices(configuration);
     }
