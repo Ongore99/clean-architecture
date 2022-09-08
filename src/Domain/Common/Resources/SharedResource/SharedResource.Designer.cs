@@ -68,5 +68,14 @@ namespace Domain.Common.Resources.SharedResource {
                 return ResourceManager.GetString("NotFoundError", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to {0} amount is exceeded.
+        /// </summary>
+        public static string TransferAmountExceeded {
+            get {
+                return ResourceManager.GetString("TransferAmountExceeded", resourceCulture);
+            }
+        }
     }
 }

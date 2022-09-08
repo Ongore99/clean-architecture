@@ -1,12 +1,9 @@
 using System.Net;
-using System.Security.Authentication;
 using Domain.Common.Exceptions;
 using FluentValidation;
-using FluentValidation.Results;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
 using Serilog.Core;
-using WebApi.Common.Bases;
 
 namespace WebApi.Common.Extensions.ErrorHandlingServices;
 
@@ -35,10 +32,7 @@ public static class ErrorHandlingServiceExtension
                 Title = ex.Message,
                 Status = StatusCodes.Status500InternalServerError,
                 Type = "https://httpstatuses.io/500",
-                AdditionalData = new Dictionary<string, object?>
-                {
-                    { "code", ex.Code }
-                }
+                Code = ex.Code
             });
         });
     }

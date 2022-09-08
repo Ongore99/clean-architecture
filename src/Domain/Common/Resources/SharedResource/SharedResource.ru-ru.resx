@@ -14,4 +14,7 @@
     <data name="NotFoundError" xml:space="preserve">
         <value>{0} не найдено</value>
     </data>
+    <data name="TransferAmountExceeded" xml:space="preserve">
+        <value>{0} превышает 10000</value>
+    </data>
 </root>

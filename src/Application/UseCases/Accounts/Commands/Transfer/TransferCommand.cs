@@ -29,7 +29,7 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
 
     public async Task<HttpStatusCode> Handle(TransferCommand cmd, CancellationToken cancellationToken)
     {
-        await _unit.BeginTransaction();
+        await _unit.BeginTransactionAsync();
         try
         {
             var account = await _unit.AccountRepository
@@ -40,8 +40,7 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
             
             _accountService.Transfer(account, receiverAccount, cmd.Amount);
             
-            await _unit.SaveAsync();
-            await _unit.CommitAsync();
+            await _unit.CommitAsync(true);
         }
         catch
         {

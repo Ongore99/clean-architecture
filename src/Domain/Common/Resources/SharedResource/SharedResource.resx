@@ -21,4 +21,7 @@
     <data name="NotFoundError" xml:space="preserve">
         <value>{0} not found</value>
     </data>
+    <data name="TransferAmountExceeded" xml:space="preserve">
+        <value>{0} amount is exceeded</value>
+    </data>
 </root>

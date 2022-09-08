@@ -28,6 +28,7 @@ public static class SwaggerServiceExtension
             x.CustomSchemaIds(t => t.FullName?.Replace("+", "."));
             x.IncludeXmlComments(Path.Combine(AppContext.BaseDirectory, $"{nameof(WebApi)}.xml"));
             x.ExampleFilters();
+            x.OperationFilter<LanguageHeaderFilter>();
         });
     }
     

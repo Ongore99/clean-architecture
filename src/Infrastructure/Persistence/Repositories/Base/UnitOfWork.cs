@@ -67,13 +67,18 @@ public class UnitOfWork : IUnitOfWork
         GC.SuppressFinalize(this);
     }
     
-    public async Task BeginTransaction()  
+    public async Task BeginTransactionAsync()  
     {  
         await _context.Database.BeginTransactionAsync();  
     } 
     
-    public async Task CommitAsync()  
-    {  
+    public async Task CommitAsync(bool save = false)  
+    {
+        if (save)
+        {
+            await _context.SaveChangesAsync();
+        }
+        
         await _context.Database.CommitTransactionAsync();  
     } 
     

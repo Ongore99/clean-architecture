@@ -12,6 +12,7 @@ using MediatR;
 using Microsoft.AspNetCore.Mvc;
 using Swashbuckle.AspNetCore.Filters;
 using WebApi.Common.Extensions;
+using WebApi.Common.Extensions.ErrorHandlingServices;
 using WebApi.Common.Services;
 using WebApi.Endpoints.Accounts.Dtos.Requests;
 using WebApi.Endpoints.Accounts.Dtos.SwaggeExamples;
@@ -34,6 +35,7 @@ public class AccountController : BaseController
     /// List of my accounts
     /// </summary>
     [HttpGet("me")]
+    [ProducesDefaultResponseType(typeof(CustomProblemDetails))]
     [ProducesResponseType(typeof(IEnumerable<UserAccountsGetOutDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IQueryable<UserAccountsGetOutDto>>> Me()
     {
@@ -53,7 +55,7 @@ public class AccountController : BaseController
     /// <returns>New Updated Account</returns>
     /// <response code="200">New Updated Account</response>
     [HttpPatch("{accountId:int}/withdraw")]
-    [ProducesDefaultResponseType(typeof(ProblemDetails))]
+    [ProducesDefaultResponseType(typeof(CustomProblemDetails))]
     [ProducesResponseType(typeof(WithdrawAccountOut), StatusCodes.Status200OK)]
     [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))]
     public async Task<ActionResult<Account>> Withdraw(
@@ -81,7 +83,7 @@ public class AccountController : BaseController
     /// </summary>
     /// <response code="200"></response>
     [HttpPatch("{accountId:int}/transfer")]
-    [ProducesDefaultResponseType(typeof(ProblemDetails))]
+    [ProducesDefaultResponseType(typeof(CustomProblemDetails))]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [SwaggerRequestExample(typeof(TransferRequestDto), typeof(TransferRequestExamples))]
     public async Task<ActionResult<HttpStatusCode>> Transfer(
@@ -110,7 +112,7 @@ public class AccountController : BaseController
     /// <returns>New Updated Account</returns>
     /// <response code="200">New Updated Account</response>
     [HttpGet("{accountId:int}")]
-    [ProducesDefaultResponseType(typeof(ProblemDetails))]
+    [ProducesDefaultResponseType(typeof(CustomProblemDetails))]
     [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)]
     [SwaggerResponseExample(200, typeof(GetAccountResponseExamples))]
     public async Task<ActionResult<GetUserAccountOutDto>> ById(
