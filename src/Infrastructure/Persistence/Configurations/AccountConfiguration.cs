@@ -11,7 +11,7 @@ public class AccountConfiguration : IEntityTypeConfiguration<Account>
         builder
             .Property(b => b.AccountStatusId)
             .HasDefaultValue(1);
-        
+
         builder
             .Property(b => b.IsDeleted)
             .HasDefaultValue(false);

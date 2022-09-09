@@ -1,18 +1,25 @@
+using Domain.Common.Resources;
 using Domain.Entities.Accounts;
 using FluentValidation;
+using Microsoft.Extensions.Localization;
 
 namespace Domain.Common.Validations;
 
 public class AccountValidator : AbstractValidator<Account>
 {
-    public AccountValidator()
+    private readonly IStringLocalizer _localizer;
+
+    public AccountValidator(IStringLocalizer<AccountResource> _localizer)
     {
-        RuleFor(x => x.Balance).GreaterThanOrEqualTo(0);
+        this._localizer = _localizer;
         RuleFor(x => x.Balance)
-            .LessThanOrEqualTo(45000)
+            .GreaterThanOrEqualTo(0)
+            .WithErrorCode("7");
+        RuleFor(x => x.Balance)
+            .LessThanOrEqualTo(300000)
             .When(x => x.AccountTypeId == 1);
         RuleFor(x => x.Balance)
-            .LessThanOrEqualTo(60000)
+            .LessThanOrEqualTo(400000)
             .When(x => x.AccountTypeId == 2);
     }
 }

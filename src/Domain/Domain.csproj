@@ -18,18 +18,22 @@
     </ItemGroup>
 
     <ItemGroup>
-      <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.en-us.resx">
-        <Generator>PublicResXFileCodeGenerator</Generator>
-        <DependentUpon>SharedResource.resx</DependentUpon>
-      </EmbeddedResource>
-      <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.resx">
+      <EmbeddedResource Update="Common\Resources\SharedResource.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
         <LastGenOutput>SharedResource.Designer.cs</LastGenOutput>
         <DependentUpon>SharedResource.properties</DependentUpon>
       </EmbeddedResource>
-      <EmbeddedResource Update="Common\Resources\SharedResource\SharedResource.ru-ru.resx">
+      <EmbeddedResource Update="Common\Resources\SharedResource.en-us.resx">
         <Generator>PublicResXFileCodeGenerator</Generator>
         <DependentUpon>SharedResource.resx</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Common\Resources\SharedResource.ru-ru.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <DependentUpon>SharedResource.resx</DependentUpon>
+      </EmbeddedResource>
+      <EmbeddedResource Update="Common\Resources\AccountResource.resx">
+        <Generator>PublicResXFileCodeGenerator</Generator>
+        <LastGenOutput>AccountResource.Designer.cs</LastGenOutput>
       </EmbeddedResource>
     </ItemGroup>
 
@@ -40,10 +44,15 @@
     </ItemGroup>
 
     <ItemGroup>
-      <Compile Update="Common\Resources\SharedResource\SharedResource.Designer.cs">
+      <Compile Update="Common\Resources\SharedResource.Designer.cs">
         <DesignTime>True</DesignTime>
         <AutoGen>True</AutoGen>
         <DependentUpon>SharedResource.resx</DependentUpon>
+      </Compile>
+      <Compile Update="Common\Resources\AccountResource.Designer.cs">
+        <DesignTime>True</DesignTime>
+        <AutoGen>True</AutoGen>
+        <DependentUpon>AccountResource.resx</DependentUpon>
       </Compile>
     </ItemGroup>
 

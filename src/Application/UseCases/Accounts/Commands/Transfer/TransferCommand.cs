@@ -38,7 +38,7 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
             var receiverAccount = await _unit.AccountRepository
                 .FirstAsync(x => x.Id == cmd.AccountReceiverId);
             
-            _accountService.Transfer(account, receiverAccount, cmd.Amount);
+            await _accountService.Transfer(account, receiverAccount, cmd.Amount);
             
             await _unit.CommitAsync(true);
         }

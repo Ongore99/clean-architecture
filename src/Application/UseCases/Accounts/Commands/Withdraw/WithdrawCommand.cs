@@ -1,4 +1,5 @@
 using Domain.Common.Contracts;
+using Domain.Entities.Accounts.Exceptions;
 using Domain.Services.Interfaces;
 using MediatR;
 
@@ -28,7 +29,7 @@ public class WithdrawHandler : IRequestHandler<WithdrawCommand, WithdrawAccountO
     {
         var account = await _unit.AccountRepository
             .GetUserAccount(cmd.UserId, cmd.AccountId);
-        
+
         await _accountService.Withdraw(account, cmd.Balance);
         await _unit.AccountRepository.Update(account, true);
         

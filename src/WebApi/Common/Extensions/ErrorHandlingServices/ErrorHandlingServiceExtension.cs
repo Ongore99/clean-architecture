@@ -4,6 +4,7 @@ using FluentValidation;
 using Hellang.Middleware.ProblemDetails;
 using Microsoft.AspNetCore.Mvc;
 using Serilog.Core;
+using WebApi.Common.Extensions.FluentValidationServices;
 
 namespace WebApi.Common.Extensions.ErrorHandlingServices;
 
@@ -30,8 +31,8 @@ public static class ErrorHandlingServiceExtension
             opt.Map<DomainException>(ex => new CustomProblemDetails()
             {
                 Title = ex.Message,
-                Status = StatusCodes.Status500InternalServerError,
-                Type = "https://httpstatuses.io/500",
+                Status = (int) HttpStatusCode.BadRequest,
+                Type = "https://httpstatuses.io/400",
                 Code = ex.Code
             });
         });
@@ -42,13 +43,8 @@ public static class ErrorHandlingServiceExtension
         app.UseProblemDetails();
     }
     
-    private static ValidationProblemDetails ToValidationProblemDetails(this ValidationException e)
+    private static CustomValidationProblemDetails ToValidationProblemDetails(this ValidationException e)
     {
-        return new ValidationProblemDetails(
-            e.Errors
-            .GroupBy(y => y.PropertyName)
-            .ToDictionary(y => y.Key, z =>
-                z.Select(t => t.ErrorMessage)
-                    .ToArray()));
+        return e.ToCustomValidationProblem();
     }
 }
