@@ -19,5 +19,5 @@ Dependents on **Application, Domain and Infrastructure Projects.**
 <br><br>Contains Swagger, Request DTOs for binding, Swagger Examples, Library Configurations, Sending Commands and Queries using Mediatr. <br><br>
  - **Library Configurations Path:** ```src/WebApi/Common/Extensions``` (Ef, Validation, Mediatr setup are here)<br><br>
  - **Request DTOs for binding and their Validations:** ```src/WebApi/Endpoints/Accounts/Dtos/Requests``` (Divided based on entity). Dtos contain Validation 
-logic using Fluent Validation Library. See example of validation in src/WebApi/Endpoints/Accounts/Dtos/Requests/TransferRequestDto.cs <br><br>
+logic using [Fluent Validation Library](https://fluentvalidation.net/). See example of validation in src/WebApi/Endpoints/Accounts/Dtos/Requests/TransferRequestDto.cs <br><br>
  - **Swagger Response and Request Examples:** ```src/WebApi/Endpoints/Accounts/Dtos/SwaggeExamples``` (Divided based on entity) <br><br>
