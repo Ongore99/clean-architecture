@@ -21,7 +21,7 @@ https://www.youtube.com/watch?v=tLk4pZZtiDY&t=379s
 Depends on **Application, Domain and Infrastructure Projects.**
 
 Consists of *Common* and *Endpoints* Folders. <br><br> 
-- **Common folder** contains all Common things related our API (For example you may create folderw for Extensions, Bases, Attributes, Helpers, Filters, Middlewares). <br><br>
+- **Common folder** contains all Common things related our API (For example you may create folders for Extensions, Bases, Attributes, Helpers, Filters, Middlewares, Resources). <br><br>
 - **Endpoints folder** contains Controllers, Request Dtos with their Validaitons, Swagger Examples  (Divided based on entity that you are mainly working on) <br><br>
 
 Contains Swagger, Request DTOs for binding, [Swagger Examples](https://medium.com/@niteshsinghal85/multiple-request-response-examples-for-swagger-ui-in-asp-net-core-864c0bdc6619), Library Configurations, Sending Commands and Queries using [Mediatr](https://www.youtube.com/watch?v=YzOBrVlthMk). <br><br>
@@ -30,11 +30,11 @@ Contains Swagger, Request DTOs for binding, [Swagger Examples](https://medium.co
 logic using [Fluent Validation Library](https://fluentvalidation.net/). Fluent Validation [integrated with Swagger](https://anexinet.com/blog/asp-net-core-fluentvalidation-swagger/)  to show what validation the Dto has. See example of validation in src/WebApi/Endpoints/Accounts/Dtos/Requests/TransferRequestDto.cs <br><br>
  - **Swagger Response and Request Examples:** ```src/WebApi/Endpoints/Accounts/Dtos/SwaggeExamples``` (Divided based on entity) <br><br>
 
-### **Infrastructure** 
+### **Infrastructure Project** 
 Depends on **Application, Domain**.
 
 Consists of *Common* and *Persistence* Folders + any folder for other tasks not related to Business logic. For example, Aunthecation Services, External API Calls, Cloud APIs, File Manipulation Services and others <br><br> 
-- **Common folder** contains all Common things related our Infrasturcture (For example you may create folders for Extensions, Bases, Attributes, Helpers, Constants). <br><br>
+- **Common folder** contains all Common things related our Infrasturcture (For example you may create folders for Extensions, Bases, Attributes, Helpers, Constants, Resources). <br><br>
 - **Persistence folder** contains EF Configurations, Migrations, Repositories, UnitOfWork, Seeds (basically DAL) <br><br>
 
 Contains external logic not related to Business logic.
@@ -44,3 +44,10 @@ Contains external logic not related to Business logic.
 - **Repositories** ```src/Infrastructure/Persistence/Repositories``` (Feel free to extend BaseRepository) <br><br>
 - **Seed**  ```src/Infrastructure/Persistence/Seed```<br><br>
 
+### **Application Project** 
+Depends on **Domain.**
+Consists of *Common* and *Usecases* Folders. <br><br> 
+- **Common folder** contains all Common things related our Application (For example you may create folders for Extensions, Bases, Interfaces, Helpers, [Behaviours](https://levelup.gitconnected.com/how-i-upgrade-my-code-style-of-mediatr-pipeline-using-net-6-ed49aca61f47), Resources). <br><br>
+- **Usecases folder** contains Commands, Queries, their Handlers, OutDtos <br><br>
+
+Contains mapping logic, using repository to retrieve data, calling domain services.
