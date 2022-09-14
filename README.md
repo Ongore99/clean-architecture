@@ -54,3 +54,14 @@ Contains mapping logic, using repository to retrieve data, calling domain servic
 
 - **Query Folder:** ```src/Application/UseCases/Accounts/Queries```<br><br>
 - **Command Folder** ```src/Application/UseCases/Accounts/Commands```<br><br>
+
+### **Domain Project** 
+Depends on some libraries. As little as possible.
+Consists of *Common*, *Entities* and *Services* Folders. <br><br> 
+- **Common folder** contains all Common things related our Application (For example you may create folders for Extensions, Bases, Interfaces, Helpers,Exceptions, Domain Validations, Contracts, Resources). <br><br>
+- **Entities folder** contains Entites with Exceptions related to this entities <br><br>
+
+Contains business logic using services and entities. Talks with infrastructure using contracts(interfaces)
+
+- **Query Folder:** ```src/Application/UseCases/Accounts/Queries```<br><br>
+- **Command Folder** ```src/Application/UseCases/Accounts/Commands```<br><br>
