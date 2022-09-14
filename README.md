@@ -51,3 +51,6 @@ Consists of *Common* and *Usecases* Folders. <br><br>
 - **Usecases folder** contains Commands, Queries, their Handlers, OutDtos <br><br>
 
 Contains mapping logic, using repository to retrieve data, calling domain services.
+
+- **Query Folder:** ```src/Application/UseCases/Accounts/Queries```<br><br>
+- **Command Folder** ```src/Application/UseCases/Accounts/Commands```<br><br>
