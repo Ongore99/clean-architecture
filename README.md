@@ -71,3 +71,6 @@ Contains business logic using services and entities. Talks with infrastructure u
 - **Common Exceptions Folder** ```src/Domain/Common/Exceptions```<br><br>
 - **Contracts Folder** ```src/Domain/Common/Contracts``` (Infrastructure are using those interfaces to implement them)<br><br>
 - **Constants Folder** ```src/Domain/Common/Constants```<br><br>
+
+## Technical Details
+### API - REST
