@@ -45,7 +45,7 @@ Contains external logic not related to Business logic.
 - **Seed**  ```src/Infrastructure/Persistence/Seed```<br><br>
 
 ### **Application Project** 
-Depends on **Domain.**
+Depends on **Domain.**<br><br>
 Consists of *Common* and *Usecases* Folders. <br><br> 
 - **Common folder** contains all Common things related our Application (For example you may create folders for Extensions, Bases, Interfaces, Helpers, [Behaviours](https://levelup.gitconnected.com/how-i-upgrade-my-code-style-of-mediatr-pipeline-using-net-6-ed49aca61f47), Resources). <br><br>
 - **Usecases folder** contains Commands, Queries, their Handlers, OutDtos <br><br>
@@ -56,12 +56,17 @@ Contains mapping logic, using repository to retrieve data, calling domain servic
 - **Command Folder** ```src/Application/UseCases/Accounts/Commands```<br><br>
 
 ### **Domain Project** 
-Depends on some libraries. As little as possible.
+Depends on some libraries. As little as possible. <br><br>
 Consists of *Common*, *Entities* and *Services* Folders. <br><br> 
 - **Common folder** contains all Common things related our Application (For example you may create folders for Extensions, Bases, Interfaces, Helpers,Exceptions, Domain Validations, Contracts, Resources). <br><br>
 - **Entities folder** contains Entites with Exceptions related to this entities <br><br>
 
 Contains business logic using services and entities. Talks with infrastructure using contracts(interfaces)
 
-- **Query Folder:** ```src/Application/UseCases/Accounts/Queries```<br><br>
-- **Command Folder** ```src/Application/UseCases/Accounts/Commands```<br><br>
+- **Entities Folder:** ```src/Domain/Entities``` (Divided based on schema) <br><br>
+- **Services Folder:** ```src/Domain/Services``` <br><br>
+- **Domain Validation Folder** ```src/Domain/Common/Validations```<br><br>
+- **Resources Folder** ```src/Domain/Common/Resources```<br><br>
+- **Common Exceptions Folder** ```src/Domain/Common/Exceptions```<br><br>
+- **Contracts Folder** ```src/Domain/Common/Contracts``` (Infrastructure are using those interfaces to implement them)<br><br>
+- **Constants Folder** ```src/Domain/Common/Constants```<br><br>
