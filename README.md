@@ -24,7 +24,7 @@ Consists of *Common* and *Endpoints* Folders. <br><br>
 - **Common folder** contains all Common things related our API (For example you may create folders for Extensions, Bases, Attributes, Helpers, Filters, Middlewares, Resources). <br><br>
 - **Endpoints folder** contains Controllers, Request Dtos with their Validaitons, Swagger Examples  (Divided based on entity that you are mainly working on) <br><br>
 
-Contains Swagger, Request DTOs for binding, [Swagger Examples](https://medium.com/@niteshsinghal85/multiple-request-response-examples-for-swagger-ui-in-asp-net-core-864c0bdc6619), Library Configurations, Sending Commands and Queries using [Mediatr](https://www.youtube.com/watch?v=YzOBrVlthMk). <br><br>
+Contains Swagger, Request DTOs for binding, [Swagger Examples](https://medium.com/@niteshsinghal85/multiple-request-response-examples-for-swagger-ui-in-asp-net-core-864c0bdc6619), Library Configurations, Sending Commands and Queries using Mediatr. <br><br>
  - **Library Configurations Path:** ```src/WebApi/Common/Extensions``` (Ef, Validation, Mediatr and other services cnofigs are here)<br><br>
  - **Validation of Request Dtos:** ```src/WebApi/Endpoints/Accounts/Dtos/Requests``` (Divided based on entity). See example of validation in src/WebApi/Endpoints/Accounts/Dtos/Requests/TransferRequestDto.cs <br><br>
  - **Swagger Response and Request Examples:** ```src/WebApi/Endpoints/Accounts/Dtos/SwaggeExamples``` (Divided based on entity) <br><br>
@@ -114,3 +114,58 @@ public class TransferRequestValidator : AbstractValidator<TransferRequestDto>
 Domain Project is also using Fluent Validation to Validate Entities before do any manipulation with them. Use Domain validation to write common rules for some entities. For example: Before do manipulation with account, check whether the balance is not < 0.<br><br>
 
 Configs are here:```src/WebApi/Common/Extensions/FluentValidationServices/FluentValidationServiceExtension.cs```
+
+### Mediatr
+[Mediatr](https://github.com/jbogard/MediatR) used in this template to implement [CQRS Pattern](https://www.youtube.com/watch?v=YzOBrVlthMk). Here is diagram of CQRS Pattern:<br><br>
+![image](https://user-images.githubusercontent.com/31799470/190372074-4f267cef-21f1-47e7-bebf-f34e125b283d.png)
+<br><br>
+**Note:** Commands and Queries should contain their handlers in the same file:
+```
+using Domain.Common.Contracts;
+using Domain.Entities.Accounts.Exceptions;
+using Domain.Services.Interfaces;
+using MediatR;
+
+namespace Core.UseCases.Accounts.Commands.Withdraw;
+
+public class WithdrawCommand : IRequest<WithdrawAccountOut>
+{
+    public int UserId { get; set; }
+    
+    public decimal Balance { get; set; }
+    
+    public int AccountId { get; set; }
+}
+
+public class WithdrawHandler : IRequestHandler<WithdrawCommand, WithdrawAccountOut>
+{
+    private readonly IAccountService _accountService;
+    private readonly IUnitOfWork _unit;
+
+    public WithdrawHandler(IAccountService accountService, IUnitOfWork unit)
+    {
+        _accountService = accountService;
+        _unit = unit;
+    }
+
+    public async Task<WithdrawAccountOut> Handle(WithdrawCommand cmd, CancellationToken cancellationToken)
+    {
+        var account = await _unit.AccountRepository
+            .GetUserAccount(cmd.UserId, cmd.AccountId);
+
+        await _accountService.Withdraw(account, cmd.Balance);
+        await _unit.AccountRepository.Update(account, true);
+        
+        var withdrawAccount = WithdrawAccountOut.MapFrom(account);
+        
+        return withdrawAccount;
+    }
+}
+```
+You send Commands and Queries using Mediatr in your controller in this way: ```await _mediator.Send(command);```<br>
+<br>
+You can also add [behaviours](https://youtu.be/2JzQuIvxIqk) to your mediatr request if you wish. 
+<br><br>
+
+Configs are here:```src/WebApi/Common/Extensions/MediatrServices/MediatrServiceExtension.cs```
+
