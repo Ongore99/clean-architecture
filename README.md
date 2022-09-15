@@ -111,4 +111,6 @@ public class TransferRequestValidator : AbstractValidator<TransferRequestDto>
 }
 ```
 <br>
-Domain Project is also using Fluent Validation to Validate Entities before do any manipulation with them. Use Domain validation to write common rules for some entities. For example: Before do manipulation with account, check whether the balance is not < 0.
+Domain Project is also using Fluent Validation to Validate Entities before do any manipulation with them. Use Domain validation to write common rules for some entities. For example: Before do manipulation with account, check whether the balance is not < 0.<br><br>
+
+Configs are here:```src/WebApi/Common/Extensions/FluentValidationServices/FluentValidationServiceExtension.cs```
