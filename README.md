@@ -60,6 +60,7 @@ Depends on some libraries. As little as possible. <br><br>
 Consists of *Common*, *Entities* and *Services* Folders. <br><br> 
 - **Common folder** contains all Common things related our Application (For example you may create folders for Extensions, Bases, Interfaces, Helpers,Exceptions, Domain Validations, Contracts, Resources). <br><br>
 - **Entities folder** contains Entites with Exceptions related to this entities <br><br>
+- **Services folder** contains Services that are only working with Entities, external services should be defined in Infrastructure layer.<br><br>
 
 Contains business logic using services and entities. Talks with infrastructure using contracts(interfaces)
 
