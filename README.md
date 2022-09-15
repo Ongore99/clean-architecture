@@ -74,6 +74,8 @@ Contains business logic using services and entities. Talks with infrastructure u
 ## Technical Details
 ### API Design
 REST Best practices are using on the current template while designing current API. More about best practices you may found [here.](https://soshace.com/rest-api-design-best-practices/).
+### Error Handling
+For error handling I used popular library [Hellang.Middleware.ProblemDetails](https://www.nuget.org/packages/Hellang.Middleware.ProblemDetails/). <br><br> This library allows to return exception in acceptable [RFC 7807](https://www.rfc-editor.org/rfc/rfc7807) format called **Problem Details**. I created 5 common Exceptions and mapped them to the appropriate Status Codes located in the file: ```src/WebApi/Common/Extensions/ErrorHandlingServices/ErrorHandlingServiceExtension.cs```. Feel Free to modify this file for writing mappings for your exceptions. I also extended built-in Problem Details model to include error codes in response to the error: ```src/WebApi/Common/Extensions/ErrorHandlingServices/CustomProblemDetails.cs```<br>
 
 ### Validation
 [Fluent Validation Library](https://fluentvalidation.net/) used in this template for request dto validation. Validator logic contains in Request Dto file itself. Fluent Validation [integrated with Swagger](https://anexinet.com/blog/asp-net-core-fluentvalidation-swagger/) to show what validation the Dto has:
