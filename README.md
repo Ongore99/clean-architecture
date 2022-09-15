@@ -26,15 +26,14 @@ Consists of *Common* and *Endpoints* Folders. <br><br>
 
 Contains Swagger, Request DTOs for binding, [Swagger Examples](https://medium.com/@niteshsinghal85/multiple-request-response-examples-for-swagger-ui-in-asp-net-core-864c0bdc6619), Library Configurations, Sending Commands and Queries using [Mediatr](https://www.youtube.com/watch?v=YzOBrVlthMk). <br><br>
  - **Library Configurations Path:** ```src/WebApi/Common/Extensions``` (Ef, Validation, Mediatr and other services cnofigs are here)<br><br>
- - **Validation of Request Dtos:** ```src/WebApi/Endpoints/Accounts/Dtos/Requests``` (Divided based on entity). Dtos contain Validation 
-logic using [Fluent Validation Library](https://fluentvalidation.net/). Fluent Validation [integrated with Swagger](https://anexinet.com/blog/asp-net-core-fluentvalidation-swagger/)  to show what validation the Dto has. See example of validation in src/WebApi/Endpoints/Accounts/Dtos/Requests/TransferRequestDto.cs <br><br>
+ - **Validation of Request Dtos:** ```src/WebApi/Endpoints/Accounts/Dtos/Requests``` (Divided based on entity). See example of validation in src/WebApi/Endpoints/Accounts/Dtos/Requests/TransferRequestDto.cs <br><br>
  - **Swagger Response and Request Examples:** ```src/WebApi/Endpoints/Accounts/Dtos/SwaggeExamples``` (Divided based on entity) <br><br>
 
 ### **Infrastructure Project** 
 Depends on **Application, Domain**.
 
 Consists of *Common* and *Persistence* Folders + any folder for other tasks not related to Business logic. For example, Aunthecation Services, External API Calls, Cloud APIs, File Manipulation Services and others <br><br> 
-- **Common folder** contains all Common things related our Infrasturcture (For example you may create folders for Extensions, Bases, Attributes, Helpers, Constants, Resources). <br><br>
+- **Common folder** contains all Common things related our Infrastructure (For example you may create folders for Extensions, Bases, Attributes, Helpers, Constants, Resources). <br><br>
 - **Persistence folder** contains EF Configurations, Migrations, Repositories, UnitOfWork, Seeds (basically DAL) <br><br>
 
 Contains external logic not related to Business logic.
@@ -58,7 +57,7 @@ Contains mapping logic, using repository to retrieve data, calling domain servic
 ### **Domain Project** 
 Depends on some libraries. As little as possible. <br><br>
 Consists of *Common*, *Entities* and *Services* Folders. <br><br> 
-- **Common folder** contains all Common things related our Application (For example you may create folders for Extensions, Bases, Interfaces, Helpers,Exceptions, Domain Validations, Contracts, Resources). <br><br>
+- **Common folder** contains all Common things related our Application (For example you may create folders for Extensions, Bases, Interfaces, Helpers, Exceptions, Domain Validations, Contracts, Resources). <br><br>
 - **Entities folder** contains Entites with Exceptions related to this entities <br><br>
 - **Services folder** contains Services that are only working with Entities, external services should be defined in Infrastructure layer.<br><br>
 
@@ -73,4 +72,41 @@ Contains business logic using services and entities. Talks with infrastructure u
 - **Constants Folder** ```src/Domain/Common/Constants```<br><br>
 
 ## Technical Details
-### API - REST
+### API Design
+REST Best practices are using on the current template while designing current API. More about best practices you may found [here.](https://soshace.com/rest-api-design-best-practices/).
+
+### Validation
+[Fluent Validation Library](https://fluentvalidation.net/) used in this template for request dto validation. Validator logic contains in Request Dto file itself. Fluent Validation [integrated with Swagger](https://anexinet.com/blog/asp-net-core-fluentvalidation-swagger/) to show what validation the Dto has:
+```
+using System.Text.Json.Serialization;
+using FluentValidation;
+
+namespace WebApi.Endpoints.Accounts.Dtos.Requests;
+
+public class TransferRequestDto
+{
+    [JsonIgnore]
+    public int AccountSenderId { get; set; }
+    
+    public int AccountReceiverId { get; set; }
+    
+    public decimal Amount { get; set; }
+}
+
+public class TransferRequestValidator : AbstractValidator<TransferRequestDto> 
+{
+    public TransferRequestValidator()
+    {
+        RuleFor(x => x.AccountReceiverId)
+            .GreaterThan(0)
+            .NotEqual(x => x.AccountSenderId)
+            .WithErrorCode("5");;
+
+        RuleFor(x => x.Amount)
+            .GreaterThan(0)
+            .WithErrorCode("4");
+    }
+}
+```
+<br>
+Domain Project is also using Fluent Validation to Validate Entities before do any manipulation with them. Use Domain validation to write common rules for some entities. For example: Before do manipulation with account, check whether the balance is not < 0.
