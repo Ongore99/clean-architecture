@@ -73,7 +73,7 @@ Contains business logic using services and entities. Talks with infrastructure u
 
 ## Technical Details
 ### API Design
-REST Best practices are using on the current template while designing current API. More about best practices you may found [here](https://soshace.com/rest-api-design-best-practices/).
+REST Best practices are using on the current template while designing current API. More about best practices you may found [here](https://soshace.com/rest-api-design-best-practices/).  <br><br>
 ### Error Handling
 For error handling I used popular library [Hellang.Middleware.ProblemDetails](https://www.nuget.org/packages/Hellang.Middleware.ProblemDetails/). <br><br> This library allows to return exception in [RFC 7807](https://www.rfc-editor.org/rfc/rfc7807) standart called **Problem Details**. I created 5 common Exceptions and mapped them to the appropriate Status Codes located in the file: ```src/WebApi/Common/Extensions/ErrorHandlingServices/ErrorHandlingServiceExtension.cs```. Feel Free to modify this file for writing mappings for your exceptions. You should also provide error code in the form of integer. Error code is unique identifier of the exception. I also extended built-in Problem Details model to include error codes in response to the error: ```src/WebApi/Common/Extensions/ErrorHandlingServices/CustomProblemDetails.cs```<br>
 
@@ -83,8 +83,7 @@ Current Base Exceptions:
 - AuthorizationException ```(src/Domain/Common/Exceptions/AuthorizationException.cs)``` -> Should be thrown when user is not aunthorized. *Mapped to Status Code 401*
 - NotFoundException ```(src/Domain/Common/Exceptions/NotFoundException.cs)``` -> Should be thrown when entity is not found. Use ```First()``` method from ```BaseRepository``` to automatically throw this exception when entity is not found. *Mapped to Status Code 404*
 - InnerException ```(src/Domain/Common/Exceptions/InnerException.cs)``` -> Should be thrown when something unexpected happen and should not be dislpayed on the screen. *Mapped to Status Code 500*
-- DomainException ```(src/Domain/Common/Exceptions/DomainException.cs)``` -> Should be thrown when something expected happen and should be dislpayed on the screen. It is abstract class so you need to create specific Business Exception that will inherit DomainException. See example: ```TransferAccountLimitExceededException```. *Mapped to Status Code 400*
-
+- DomainException ```(src/Domain/Common/Exceptions/DomainException.cs)``` -> Should be thrown when something expected happen and should be dislpayed on the screen. It is abstract class so you need to create specific Business Exception that will inherit DomainException. See example: ```TransferAccountLimitExceededException```. *Mapped to Status Code 400*<br><br>
 ### Validation
 [Fluent Validation Library](https://fluentvalidation.net/) used in this template for request dto validation. Validator logic contains in Request Dto file itself. Fluent Validation [integrated with Swagger](https://anexinet.com/blog/asp-net-core-fluentvalidation-swagger/) to show what validation the Dto has:
 ```
@@ -121,7 +120,7 @@ public class TransferRequestValidator : AbstractValidator<TransferRequestDto>
 <br>
 Domain Project is also using Fluent Validation to Validate Entities before do any manipulation with them. Use Domain validation to write common rules for some entities. For example: Before do manipulation with account, check whether the balance is not < 0.<br><br>
 
-Configs are here:```src/WebApi/Common/Extensions/FluentValidationServices/FluentValidationServiceExtension.cs```
+Configs are here:```src/WebApi/Common/Extensions/FluentValidationServices/FluentValidationServiceExtension.cs``` <br><br>
 
 ### Mediatr
 [Mediatr](https://github.com/jbogard/MediatR) used in this template to implement [CQRS Pattern](https://www.youtube.com/watch?v=YzOBrVlthMk). Here is diagram of CQRS Pattern:<br><br>
@@ -175,7 +174,7 @@ You send Commands and Queries using Mediatr in your controller in this way: ```a
 You can also add [behaviours](https://youtu.be/2JzQuIvxIqk) to your mediatr request if you wish. 
 <br><br>
 
-Configs are here:```src/WebApi/Common/Extensions/MediatrServices/MediatrServiceExtension.cs```
+Configs are here:```src/WebApi/Common/Extensions/MediatrServices/MediatrServiceExtension.cs``` <br><br>
 
 ### Repositories and Unit of Work
 [Repository](https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application) used in this template to encapsulate Data Access. It provides the following benefits:
@@ -198,4 +197,5 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
     }
 }
 ```
-
+<br><br>
+Configs are here: ```src/WebApi/Common/Extensions/RepositoryServices/RepositoryServiceExtension.cs``` <br><br>
