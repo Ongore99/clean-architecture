@@ -184,9 +184,9 @@ Configs are here:```src/WebApi/Common/Extensions/MediatrServices/MediatrServiceE
 - Reusing popular methods
 
 If this is not convenient for you, you may inject directly DbContext and work with it from Handlers. <br><br>
-If you create new repository you should inherit from ```src/Infrastructure/Persistence/Repositories/Base/BaseRepository.cs``` because it provides usefull base methods that you may need. Most of the methods were copy pasted from the open source [library](https://github.com/Arch/UnitOfWork/blob/master/src/UnitOfWork/Repository.cs). Feel free to extend BaseRepository to have additional methods for your need. MO
+If you create new repository you should inherit from ```src/Infrastructure/Persistence/Repositories/Base/BaseRepository.cs``` because it provides usefull base methods that you may need. Most of the methods were copy pasted from the open source [library](https://github.com/Arch/UnitOfWork/blob/master/src/UnitOfWork/Repository.cs). Feel free to extend BaseRepository to have additional methods for your need.
 <br><br>
-Unit of work is needed only for encapsulation of transactions and to have only one injection instead of injecting all repositories. If you create new repository, add this repository to ```src/Domain/Common/Contracts/IUnitOfWork.cs``` accordingly. To work with repositries inhect Unit of Work as follows:
+Unit of work is needed only for encapsulation of transactions and to have only one injection instead of injecting all repositories. If you create new repository, add this repository to ```src/Domain/Common/Contracts/IUnitOfWork.cs``` accordingly. To work with repositries inject Unit of Work as follows:
 ```
 public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatusCode>
 {
