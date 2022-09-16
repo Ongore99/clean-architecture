@@ -83,7 +83,7 @@ Current Exceptions:
 - AuthorizationException ```(src/Domain/Common/Exceptions/AuthorizationException.cs)``` -> Should be thrown when user is not aunthorized. *Mapped to Status Code 401*
 - NotFoundException ```(src/Domain/Common/Exceptions/NotFoundException.cs)``` -> Should be thrown when entity is not found. Use ```First()``` method from ```BaseRepository``` to automatically throw this exception when entity is not found. *Mapped to Status Code 404*
 - InnerException ```(src/Domain/Common/Exceptions/InnerException.cs)``` -> Should be thrown when something unexpected happen and should not be dislpayed on the screen. *Mapped to Status Code 500*
-- DomainException ```(src/Domain/Common/Exceptions/DomainException.cs)``` -> Should be thrown when something expected happen and should be dislpayed on the screen. Should be *Mapped to Status Code 400*
+- DomainException ```(src/Domain/Common/Exceptions/DomainException.cs)``` -> Should be thrown when something expected happen and should be dislpayed on the screen. It is abstract class so you need to create specific Business Exception that will inherit DomainException. See example: ```TransferAccountLimitExceededException```. *Mapped to Status Code 400*
 
 ### Validation
 [Fluent Validation Library](https://fluentvalidation.net/) used in this template for request dto validation. Validator logic contains in Request Dto file itself. Fluent Validation [integrated with Swagger](https://anexinet.com/blog/asp-net-core-fluentvalidation-swagger/) to show what validation the Dto has:
