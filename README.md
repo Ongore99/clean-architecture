@@ -177,3 +177,25 @@ You can also add [behaviours](https://youtu.be/2JzQuIvxIqk) to your mediatr requ
 
 Configs are here:```src/WebApi/Common/Extensions/MediatrServices/MediatrServiceExtension.cs```
 
+### Repositories and Unit of Work
+[Repository](https://docs.microsoft.com/en-us/aspnet/mvc/overview/older-versions/getting-started-with-ef-5-using-mvc-4/implementing-the-repository-and-unit-of-work-patterns-in-an-asp-net-mvc-application) used in this template to encapsulate Data Access. It provides the following benefits:
+- Improves Readbility of the code
+- Improves Testability of the code
+- Reusing popular methods
+
+If this is not convenient for you, you may inject directly DbContext and work with it from Handlers. <br><br>
+If you create new repository you should inherit from ```src/Infrastructure/Persistence/Repositories/Base/BaseRepository.cs``` because it provides usefull base methods that you may need. Most of the methods were copy pasted from the open source [library](https://github.com/Arch/UnitOfWork/blob/master/src/UnitOfWork/Repository.cs). Feel free to extend BaseRepository to have additional methods for your need. MO
+<br><br>
+Unit of work is needed only for encapsulation of transactions and to have only one injection instead of injecting all repositories. If you create new repository, add this repository to ```src/Domain/Common/Contracts/IUnitOfWork.cs``` accordingly. To work with repositries inhect Unit of Work as follows:
+```
+public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatusCode>
+{
+    private readonly IUnitOfWork _unit;
+
+    public TransferCommandHandler(IUnitOfWork unit)
+    {
+        _unit = unit;
+    }
+}
+```
+
