@@ -310,7 +310,8 @@ Feel free to modify configurations per your needs.
 Configs are here: ```src/WebApi/Common/Extensions/GridifyServices/GridifyServiceExtension.cs```<br><br>
 
 ### Localization
-To implement localization this [article](https://lokalise.com/blog/asp-net-core-localization/#ASPNET_Core_date_and_time_format_localization) was used. The current project supports the following cultures: *en-us, ru-ru*, default culture: *en*. <br><br>
+To implement localization this [article](https://lokalise.com/blog/asp-net-core-localization/#ASPNET_Core_date_and_time_format_localization) was used. The current project supports the following cultures: *en-us, ru-ru*, default culture: *en*. 
+<br>
 - All ther error messages should be contained in resources, except Inner Exceptions. The texts of InnerExceptions could be located as constants since they don't require to be displayed. 
 - Each layer(WebApi, Infrastructure...) should have its own *Resources* folder with texts used in this layer. 
 - Each entity should have its own resource file and associated texts inside so we could avoid a lot of text messages in one resource file.
