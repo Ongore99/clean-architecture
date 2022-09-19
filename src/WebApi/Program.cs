@@ -1,6 +1,7 @@
 using Serilog;
 using Serilog.Core;
 using WebApi.Common.Extensions;
+using WebApi.Common.Extensions.SerialogServices;
 
 namespace WebApi;
 
