@@ -24,7 +24,7 @@ Consists of *Common* and *Endpoints* Folders. <br><br>
 - **Common folder** contains all Common things related our API (For example you may create folders for Extensions, Bases, Attributes, Helpers, Filters, Middlewares, Resources). <br><br>
 - **Endpoints folder** contains Controllers, Request Dtos with their Validaitons, Swagger Examples  (Divided based on entity that you are mainly working on) <br><br>
 
-Contains Swagger, Request DTOs for binding, [Swagger Examples](https://medium.com/@niteshsinghal85/multiple-request-response-examples-for-swagger-ui-in-asp-net-core-864c0bdc6619), Library Configurations, Sending Commands and Queries using Mediatr. <br><br>
+Contains Swagger, Request DTOs for binding, Swagger Examples, Library Configurations, Sending Commands and Queries using Mediatr. <br><br>
  - **Library Configurations Path:** ```src/WebApi/Common/Extensions``` (Ef, Validation, Mediatr and other services cnofigs are here)<br><br>
  - **Validation of Request Dtos:** ```src/WebApi/Endpoints/Accounts/Dtos/Requests``` (Divided based on entity). See example of validation in src/WebApi/Endpoints/Accounts/Dtos/Requests/TransferRequestDto.cs <br><br>
  - **Swagger Response and Request Examples:** ```src/WebApi/Endpoints/Accounts/Dtos/SwaggeExamples``` (Divided based on entity) <br><br>
@@ -227,4 +227,40 @@ public record TransactionOutDto
 <br>
 
 Then it will automatically will use your mapping config when you call *Adapt()* or *ProjectTo()* methods.
+<br><br>
+Configs are here: ```src/WebApi/Common/Extensions/MapsterServices/MapsterExtension.cs```<br><br>
+### Logging
+[Serialog](https://serilog.net/) was used for logging in this project. Here are advantages of the Serialog:
+- It is convenient
+- It is flexible
+
+I used this [video tutorial]([https://sd.blackball.lv/articles/read/18850](https://www.youtube.com/watch?v=_iryZxv8Rxw&t)) as an implementation for logging strategy. All configurations of Serialog comes from appsettings.json file:
+```
+"Serilog": {
+        "Using": [],
+        "MinimumLevel": {
+            "Default": "Information",
+            "Override": {
+                "Microsoft": "Warning",
+                "System": "Warning"
+            }
+        },
+        "Enrich": [ "FromLogContext", "WithMachineName", "WithProcessId", "WithThreadId"],
+        "WriteTo": [
+            {
+                "Name": "Console"
+            }
+            /*,{
+                "Name": "File",
+                "Args": {
+                    "path": "E:\\Apps\\Projects\\clean-architecture\\Logs\\log.txt",
+                    "outputTemplate": "{Timestamp:G} {Message} {NewLine:1}{Exception:1}"
+                }
+            }*/
+        ]
+    },
+```
+<br>
+
+Feel free to modify configurations per your needs. Currently, it will write all configurations to Console and File(if you uncomment File section) 
 <br>
