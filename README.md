@@ -199,3 +199,24 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
 ```
 <br><br>
 Configs are here: ```src/WebApi/Common/Extensions/RepositoryServices/RepositoryServiceExtension.cs``` <br><br>
+
+### Mapping
+[Mapster](https://github.com/MapsterMapper/Mapster) was used for mapping in this project. I used this [article](https://sd.blackball.lv/articles/read/18850) as an idea for Mapping strategy. To create map config for your dto you need to inherit your Dto to ```BaseDto<TSource, TDest> (src/Application/UseCases/Accounts/Queries/GetUserAccount/GetUserAccountOutDto.cs)```:
+```
+public record TransactionOutDto
+        : BaseDto<Transaction, TransactionOutDto>
+    {
+        public long Id { get; set; }
+        
+        public decimal Amount { get; set; }
+
+        public DateTime DateCreated { get; set; }
+        
+        public override void AddCustomMappings()
+        {
+            SetCustomMappings().
+                Map(x => x.DateCreated, y => y.Date);
+        }
+    }
+```
+<br><br>
