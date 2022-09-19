@@ -225,5 +225,6 @@ public record TransactionOutDto
     }
 ```
 <br>
-Then it will automatically will use your mapping config when you ```Adapt``` or ```ProjectTo``` methods.
+
+Then it will automatically will use your mapping config when you call *Adapt()* or *ProjectTo()* methods.
 <br>
