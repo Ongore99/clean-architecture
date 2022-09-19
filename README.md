@@ -229,12 +229,14 @@ public record TransactionOutDto
 Then it will automatically will use your mapping config when you call *Adapt()* or *ProjectTo()* methods.
 <br><br>
 Configs are here: ```src/WebApi/Common/Extensions/MapsterServices/MapsterExtension.cs```<br><br>
+
+
 ### Logging
 [Serialog](https://serilog.net/) was used for logging in this project. Here are advantages of the Serialog:
 - It is convenient
 - It is flexible
 
-I used this [video tutorial]([https://sd.blackball.lv/articles/read/18850](https://www.youtube.com/watch?v=_iryZxv8Rxw&t)) as an implementation for logging strategy. All configurations of Serialog comes from appsettings.json file:
+I used this [video tutorial]([https://sd.blackball.lv/articles/read/18850](https://www.youtube.com/watch?v=_iryZxv8Rxw&t)) as an implementation for logging strategy. All configurations of Gridify comes from appsettings.json file:
 ```
 "Serilog": {
         "Using": [],
@@ -263,4 +265,45 @@ I used this [video tutorial]([https://sd.blackball.lv/articles/read/18850](https
 <br>
 
 Feel free to modify configurations per your needs. Currently, it will write all configurations to Console and File(if you uncomment File section) 
+<br><br>
+Configs are here: ```src/WebApi/Common/Extensions/SerialogServices/SerialogServices.cs```<br><br>
+
+### Pagination, Sorting and Filtering
+[Gridify](https://alirezanet.github.io/Gridify/) was used for pagination, sorting and filtering in this project. Here are advantages of the Gridify:
+- It is convenient
+- It is fast
+
+To implement filtering, sorting and pagination you just need to create query parameter in your controller like this:
+```
+public async Task<ActionResult<GetUserAccountOutDto>> ById(
+        [FromRoute] int accountId, 
+        [FromQuery] GridifyQuery query)
+    {
+        ...
+    }
+```
 <br>
+
+Then you need to call built-in extension method ```.GridifyQueryable(request.Query)``` on your IQuerable result like this:
+<br>
+```
+account.Transactions = _unit.TransactionRepository
+            .FindByCondition<GetUserAccountOutDto.TransactionOutDto>
+                (x => x.AccountId == request.AccountId)
+            .GridifyQueryable(request.Query);
+```
+<br>
+All configs come from appsettings.json
+<br>
+```
+    "GridifyOptions": {
+        "DefaultPageSize": 25,
+        "AllowNullSearch": true
+    },
+```
+
+<br>
+
+Feel free to modify configurations per your needs. 
+<br><br>
+Configs are here: ```src/WebApi/Common/Extensions/GridifyServices/GridifyServiceExtension.cs```<br><br>
