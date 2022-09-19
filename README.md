@@ -201,7 +201,12 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
 Configs are here: ```src/WebApi/Common/Extensions/RepositoryServices/RepositoryServiceExtension.cs``` <br><br>
 
 ### Mapping
-[Mapster](https://github.com/MapsterMapper/Mapster) was used for mapping in this project. I used this [article](https://sd.blackball.lv/articles/read/18850) as an idea for Mapping strategy. To create map config for your dto you need to inherit your Dto to ```BaseDto<TSource, TDest> (src/Application/UseCases/Accounts/Queries/GetUserAccount/GetUserAccountOutDto.cs)```:
+[Mapster](https://github.com/MapsterMapper/Mapster) was used for mapping in this project. Here are advantages of the Mapster:
+- It is fast
+- It is convenient
+- It is flexible
+
+I used this [article](https://sd.blackball.lv/articles/read/18850) as an idea for Mapping strategy. To create map config for your dto you need to inherit your Dto to ```BaseDto<TSource, TDest>``` and override ```AddCustomMappings``` method. Example (src/Application/UseCases/Accounts/Queries/GetUserAccount/GetUserAccountOutDto.cs):
 ```
 public record TransactionOutDto
         : BaseDto<Transaction, TransactionOutDto>
@@ -219,4 +224,6 @@ public record TransactionOutDto
         }
     }
 ```
-<br><br>
+<br>
+Then it will automatically will use your mapping config when you ```Adapt``` or ```ProjectTo``` methods.
+<br>
