@@ -11,7 +11,7 @@ using Microsoft.Extensions.Localization;
 
 namespace Infrastructure.Persistence.Repositories.Base;
 
-public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
+public class  BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : class
 {
     private readonly IStringLocalizer<SharedResource> _localizer;
     protected readonly DbSet<TEntity> _dbSet;

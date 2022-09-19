@@ -10,7 +10,7 @@ public static class ExceptionHelpers
     {
         if (!typeof(TEnum).IsEnum)
         {
-            throw new InnerException(InnerExTexts.NotEnum.Key, InnerExTexts.NotEnum.Value);
+            throw new InnerException(InnerExTexts.NotEnum.Value, InnerExTexts.NotEnum.Key);
         }
     }
 }
