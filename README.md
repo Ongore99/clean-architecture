@@ -295,6 +295,7 @@ account.Transactions = _unit.TransactionRepository
 <br>
 All configs come from appsettings.json
 <br>
+
 ```
     "GridifyOptions": {
         "DefaultPageSize": 25,
