@@ -316,4 +316,5 @@ To implement localization this [article](https://lokalise.com/blog/asp-net-core-
 - Each layer(WebApi, Infrastructure...) should have its own *Resources* folder with texts used in this layer. 
 - Each entity should have its own resource file and associated texts inside so we could avoid a lot of text messages in one resource file.
 <br>
+
 Configs are here: ```src/WebApi/Common/Extensions/LocalizationServices/LocalizationServiceExtension.cs```<br><br>
