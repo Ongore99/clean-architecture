@@ -318,3 +318,14 @@ To implement localization this [article](https://lokalise.com/blog/asp-net-core-
 <br>
 
 Configs are here: ```src/WebApi/Common/Extensions/LocalizationServices/LocalizationServiceExtension.cs```<br><br>
+
+### Swagger
+To have a good and readble api please use appropriate attributes to decorate swagger. Readble API will decrease amount of explanation to Frontend side.
+- [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)] -> shows what object type will be returned in case of status 200
+- [ProducesDefaultResponseType(typeof(CustomProblemDetails))] -> shows what object type will be returned in case of any other response
+- [Consumes(MediaTypeNames.Application.Json)] -> shows what endpoint can consume from swagger(in this case only JSON)
+- [Produces(MediaTypeNames.Application.Json)] -> shows what endpoint can produce from swagger(in this case only JSON)
+- [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))] -> shows request object examples
+- [SwaggerResponseExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))] -> shows response object examples
+
+Configs are here: ```src/WebApi/Common/Extensions/LocalizationServices/LocalizationServiceExtension.cs```<br><br>
