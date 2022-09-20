@@ -34,7 +34,11 @@ public class AccountController : BaseController
     /// <summary>
     /// List of my accounts
     /// </summary>
-    [HttpGet("me")]
+    /// <remarks>
+    ///  Returns currently loggined accounts
+    /// </remarks>
+    /// <response code="200">Returns Accounts</response>    
+    [HttpGet("me", Name = "GetMyAccounts")]
     [ProducesDefaultResponseType(typeof(CustomProblemDetails))]
     [ProducesResponseType(typeof(IEnumerable<UserAccountsGetOutDto>), StatusCodes.Status200OK)]
     public async Task<ActionResult<IQueryable<UserAccountsGetOutDto>>> Me()
@@ -52,9 +56,13 @@ public class AccountController : BaseController
     /// <summary>
     /// Withdraw from my account
     /// </summary>
-    /// <returns>New Updated Account</returns>
+    /// <param name="accountId"> Account ID to Use</param>
+    /// <param name="dto"> Dto for withdraw</param>
+    /// <remarks>
+    /// Balance cannot be negative
+    /// </remarks>
     /// <response code="200">New Updated Account</response>
-    [HttpPatch("{accountId:int}/withdraw")]
+    [HttpPatch("{accountId:int}/withdraw", Name = "WithdrawFromMyAccount")]
     [ProducesDefaultResponseType(typeof(CustomProblemDetails))]
     [ProducesResponseType(typeof(WithdrawAccountOut), StatusCodes.Status200OK)]
     [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))]
@@ -81,8 +89,13 @@ public class AccountController : BaseController
     /// <summary>
     /// Transfer balance from one account to another
     /// </summary>
-    /// <response code="200"></response>
-    [HttpPatch("{accountId:int}/transfer")]
+    /// <param name="accountId"> Account ID to Use</param>
+    /// <param name="dto"> Dto for withdraw</param>
+    /// <remarks>
+    /// Balance cannot be negative
+    /// </remarks>
+    /// <response code="200">Returns status code</response>
+    [HttpPatch("{accountId:int}/transfer", Name = "TransferBetweenAccounts")]
     [ProducesDefaultResponseType(typeof(CustomProblemDetails))]
     [ProducesResponseType(StatusCodes.Status200OK)]
     [SwaggerRequestExample(typeof(TransferRequestDto), typeof(TransferRequestExamples))]
@@ -105,13 +118,17 @@ public class AccountController : BaseController
         
         return result;
     }
-    
+
     /// <summary>
     /// Get Account by id
     /// </summary>
-    /// <returns>New Updated Account</returns>
-    /// <response code="200">New Updated Account</response>
-    [HttpGet("{accountId:int}")]
+    /// <param name="accountId"> Account ID to Use</param>
+    /// <param name="query"></param>
+    /// <remarks>
+    /// Examples: filter=transactionStatus.Name=Success orderBy=balance
+    /// </remarks>
+    /// <response code="200">Account with Paginated transactions</response>
+    [HttpGet("{accountId:int}", Name = "GetUserAccountWithTransactions")]
     [ProducesDefaultResponseType(typeof(CustomProblemDetails))]
     [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)]
     [SwaggerResponseExample(200, typeof(GetAccountResponseExamples))]
