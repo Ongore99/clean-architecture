@@ -295,6 +295,7 @@ account.Transactions = _unit.TransactionRepository
 <br>
 All configs come from appsettings.json
 <br>
+
 ```
     "GridifyOptions": {
         "DefaultPageSize": 25,
@@ -307,3 +308,24 @@ All configs come from appsettings.json
 Feel free to modify configurations per your needs. 
 <br><br>
 Configs are here: ```src/WebApi/Common/Extensions/GridifyServices/GridifyServiceExtension.cs```<br><br>
+
+### Localization
+To implement localization this [article](https://lokalise.com/blog/asp-net-core-localization/#ASPNET_Core_date_and_time_format_localization) was used. The current project supports the following cultures: *en-us, ru-ru*, default culture: *en*. 
+<br>
+- All ther error messages should be contained in resources, except Inner Exceptions. The texts of InnerExceptions could be located as constants since they don't require to be displayed. 
+- Each layer(WebApi, Infrastructure...) should have its own *Resources* folder with texts used in this layer. 
+- Each entity should have its own resource file and associated texts inside so we could avoid a lot of text messages in one resource file.
+<br>
+
+Configs are here: ```src/WebApi/Common/Extensions/LocalizationServices/LocalizationServiceExtension.cs```<br><br>
+
+### Swagger
+To have a good and readble api please use appropriate attributes to decorate swagger. Readble API will decrease amount of explanation to Frontend side.
+- [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)] -> shows what object type will be returned in case of status 200
+- [ProducesDefaultResponseType(typeof(CustomProblemDetails))] -> shows what object type will be returned in case of any other response
+- [Consumes(MediaTypeNames.Application.Json)] -> shows what endpoint can consume from swagger(in this case only JSON)
+- [Produces(MediaTypeNames.Application.Json)] -> shows what endpoint can produce from swagger(in this case only JSON)
+- [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))] -> shows request object examples
+- [SwaggerResponseExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))] -> shows response object examples
+
+Configs are here: ```src/WebApi/Common/Extensions/SwaggerServices/SwaggerServiceExtension.cs```<br><br>
