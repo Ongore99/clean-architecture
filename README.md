@@ -328,4 +328,4 @@ To have a good and readble api please use appropriate attributes to decorate swa
 - [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))] -> shows request object examples
 - [SwaggerResponseExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))] -> shows response object examples
 
-Configs are here: ```src/WebApi/Common/Extensions/LocalizationServices/LocalizationServiceExtension.cs```<br><br>
+Configs are here: ```src/WebApi/Common/Extensions/SwaggerServices/SwaggerServiceExtension.cs```<br><br>
