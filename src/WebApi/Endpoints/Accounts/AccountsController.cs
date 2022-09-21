@@ -36,7 +36,7 @@ public class AccountController : BaseController
     /// List of my accounts
     /// </summary>
     /// <remarks>
-    ///  Returns currently loggined accounts
+    ///  Returns my accounts
     /// </remarks>
     /// <response code="200">Returns Accounts</response>    
     [HttpGet("me", Name = "GetMyAccounts")]
