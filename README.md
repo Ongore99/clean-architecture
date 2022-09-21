@@ -327,5 +327,27 @@ To have a good and readble api please use appropriate attributes to decorate swa
 - [Produces(MediaTypeNames.Application.Json)] -> shows what endpoint can produce from swagger(in this case only JSON)
 - [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))] -> shows request object examples
 - [SwaggerResponseExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))] -> shows response object examples
+- Fluent Validation [integrated with Swagger](https://anexinet.com/blog/asp-net-core-fluentvalidation-swagger/) to show what validation the Dto has
 
+Here is example of proper docs of swagger endpoint:
+```
+ /// <summary>
+ /// Transfer balance from one account to another
+ /// </summary>
+ /// <param name="accountId"> Account ID to Use</param>
+ /// <param name="dto"> Dto for withdraw</param>
+ /// <remarks>
+ /// Balance cannot be negative
+ /// </remarks>
+ /// <response code="200">Returns status code</response>
+ [HttpPatch("{accountId:int}/transfer", Name = "TransferBetweenAccounts")]
+ [ProducesDefaultResponseType(typeof(CustomProblemDetails))]
+ [ProducesResponseType(StatusCodes.Status200OK)]
+ [SwaggerRequestExample(typeof(TransferRequestDto), typeof(TransferRequestExamples))]
+ ```
 Configs are here: ```src/WebApi/Common/Extensions/SwaggerServices/SwaggerServiceExtension.cs```<br><br>
+
+## Future Releases
+- Authnetication and Authorization using Identity
+- [Versioning API](https://www.infoworld.com/article/3562355/how-to-use-api-versioning-in-aspnet-core.html)
+- Static analysis code using [SonarQube](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/)
