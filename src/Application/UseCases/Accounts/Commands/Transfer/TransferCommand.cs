@@ -2,6 +2,7 @@ using System.Net;
 using Domain.Common.Contracts;
 using Domain.Services.Interfaces;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Core.UseCases.Accounts.Commands.Transfer;
 
@@ -20,11 +21,15 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
 {
     private readonly IAccountService _accountService;
     private readonly IUnitOfWork _unit;
+    private readonly ILogger<TransferCommandHandler> _logger;
 
-    public TransferCommandHandler(IAccountService accountService, IUnitOfWork unit)
+    public TransferCommandHandler(IAccountService accountService, 
+        IUnitOfWork unit,
+        ILogger<TransferCommandHandler> _logger)
     {
         _accountService = accountService;
         _unit = unit;
+        this._logger = _logger;
     }
 
     public async Task<HttpStatusCode> Handle(TransferCommand cmd, CancellationToken cancellationToken)
@@ -42,8 +47,9 @@ public class TransferCommandHandler : IRequestHandler<TransferCommand, HttpStatu
             
             await _unit.CommitAsync(true);
         }
-        catch
+        catch(Exception e)
         {
+            _logger.LogError(e, e.Message);
             await _unit.RollbackAsync();
             throw;
         }

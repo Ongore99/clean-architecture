@@ -2,6 +2,7 @@ using Domain.Common.Contracts;
 using Domain.Entities.Accounts.Exceptions;
 using Domain.Services.Interfaces;
 using MediatR;
+using Microsoft.Extensions.Logging;
 
 namespace Core.UseCases.Accounts.Commands.Withdraw;
 

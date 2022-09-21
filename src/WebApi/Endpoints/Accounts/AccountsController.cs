@@ -19,7 +19,8 @@ using WebApi.Endpoints.Accounts.Dtos.SwaggeExamples;
 
 namespace WebApi.Endpoints.Accounts;
 
-[Route("api/accounts")]
+[ApiController]
+[Route("api/v{version:apiVersion}/accounts")]
 [Consumes(MediaTypeNames.Application.Json)]
 [Produces(MediaTypeNames.Application.Json)]
 public class AccountController : BaseController
