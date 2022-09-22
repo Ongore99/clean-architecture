@@ -1,10 +1,15 @@
+using System.Text;
 using Domain.Entities.Users;
+using Infrastructure.Persistence;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Identity;
+using Microsoft.IdentityModel.Tokens;
 
 namespace WebApi.Common.Extensions.IdentityServices;
 
 public static class IdentityServiceExtension
 {
-    internal static void AddIdentityService(this IServiceCollection services)
+    internal static void AddIdentityService(this IServiceCollection services, ConfigurationManager config)
     {
         var builder = services.AddIdentity<User, Role>(options =>
         {
@@ -24,6 +29,28 @@ public static class IdentityServiceExtension
             options.User.AllowedUserNameCharacters =
                 "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789-._@+";
             options.User.RequireUniqueEmail = false;
-        });
+        }).AddEntityFrameworkStores<AppDbContext>()
+            .AddDefaultTokenProviders();
+        
+        var jwtConfig = config.GetSection("jwtConfig");
+        var secretKey = jwtConfig["secret"];
+        services.AddAuthentication(opt =>
+            {
+                opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+                opt.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+            })
+            .AddJwtBearer(options =>
+            {
+                options.TokenValidationParameters = new TokenValidationParameters
+                {
+                    ValidateIssuer = true,
+                    ValidateAudience = true,
+                    ValidateLifetime = true,
+                    ValidateIssuerSigningKey = true,
+                    ValidIssuer = jwtConfig["validIssuer"],
+                    ValidAudience = jwtConfig["validAudience"],
+                    IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey))
+                };
+            });
     }
 }

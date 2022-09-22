@@ -7,6 +7,7 @@ using WebApi.Common.Extensions.EfServices;
 using WebApi.Common.Extensions.ErrorHandlingServices;
 using WebApi.Common.Extensions.FluentValidationServices;
 using WebApi.Common.Extensions.GridifyServices;
+using WebApi.Common.Extensions.IdentityServices;
 using WebApi.Common.Extensions.LocalizationServices;
 using WebApi.Common.Extensions.MapsterServices;
 using WebApi.Common.Extensions.MediatrServices;
@@ -34,6 +35,7 @@ public static class WebApplicationBuilderExtension
         services.AddErrorHandlingService(configuration, env, logger);
         services.AddMediatr();
         services.AddAppDbContext(configuration, env);
+        services.AddIdentityService(configuration);
         services.AddRepositories();
         services.RegisterDomainServices(configuration);
     }
