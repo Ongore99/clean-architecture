@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.ComponentModel;
+using System.Net;
 using System.Net.Mime;
 using Core.UseCases.Accounts.Commands.Transfer;
 using Core.UseCases.Accounts.Commands.Withdraw;
@@ -69,7 +70,7 @@ public class AccountController : BaseController
     [SwaggerRequestExample(typeof(WithdrawRequestDto), typeof(WithdrawExamples))]
     public async Task<ActionResult<Account>> Withdraw(
         [FromBody] WithdrawRequestDto dto,
-        [FromRoute] int accountId,
+        [FromRoute] [DefaultValue(1)] int accountId,
         [FromServices] IValidator<WithdrawRequestDto> validator)
     {
         dto.AccountId = accountId;
@@ -134,7 +135,7 @@ public class AccountController : BaseController
     [ProducesResponseType(typeof(GetUserAccountOutDto), StatusCodes.Status200OK)]
     [SwaggerResponseExample(200, typeof(GetAccountResponseExamples))]
     public async Task<ActionResult<GetUserAccountOutDto>> ById(
-        [FromRoute] int accountId, 
+        [FromRoute] [DefaultValue(1)] int accountId, 
         [FromQuery] GridifyQuery query)
     {
         var getUserAccountQuery = new GetUserAccountQuery()
