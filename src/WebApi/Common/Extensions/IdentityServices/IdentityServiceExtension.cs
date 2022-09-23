@@ -1,5 +1,7 @@
 using System.Text;
+using Core.Common.Contracts;
 using Domain.Entities.Users;
+using Infrastructure.Identity;
 using Infrastructure.Persistence;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Identity;
@@ -11,6 +13,7 @@ public static class IdentityServiceExtension
 {
     internal static void AddIdentityService(this IServiceCollection services, ConfigurationManager config)
     {
+        services.AddScoped<IIdentityService, IdentityService>();
         services.AddIdentity<User, Role>(options =>
         {
             options.SignIn.RequireConfirmedAccount = true;
