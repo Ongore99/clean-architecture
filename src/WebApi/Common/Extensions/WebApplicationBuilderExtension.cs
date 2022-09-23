@@ -54,7 +54,8 @@ public static class WebApplicationBuilderExtension
         app.UseLocalization();
         app.UseHttpsRedirection();
         app.UseSerilogRequestLogging();
-        
+
+        app.UseAuthentication();
         app.UseAuthorization();
         app.MapControllers();
 

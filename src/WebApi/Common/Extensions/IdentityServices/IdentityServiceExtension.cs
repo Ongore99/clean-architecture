@@ -11,7 +11,7 @@ public static class IdentityServiceExtension
 {
     internal static void AddIdentityService(this IServiceCollection services, ConfigurationManager config)
     {
-        var builder = services.AddIdentity<User, Role>(options =>
+        services.AddIdentity<User, Role>(options =>
         {
             options.SignIn.RequireConfirmedAccount = true;
             
@@ -32,8 +32,10 @@ public static class IdentityServiceExtension
         }).AddEntityFrameworkStores<AppDbContext>()
             .AddDefaultTokenProviders();
         
-        var jwtConfig = config.GetSection("jwtConfig");
+        var jwtConfig = config.GetSection("identity:jwtConfig");
         var secretKey = jwtConfig["secret"];
+
+        services.AddAuthorization();
         services.AddAuthentication(opt =>
             {
                 opt.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
