@@ -1,3 +1,7 @@
+# Objectives of template
+- Descrease time for development and initial setup for common use cases.
+- Easy to configure each installed library in the template
+- Ready convention for solution structure
 # Architecture
 The Projects tries to follow clean architecture with CQRS pattern. CQRS is done using Mediatr library. Here is digram of architecture: <br> <br>
 ![Clean-Architecture-Diagram2](https://user-images.githubusercontent.com/31799470/189880565-38ff27a4-fbb2-4e4c-8d8b-b5c108c29a05.png)
