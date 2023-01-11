@@ -354,4 +354,4 @@ Configs are here: ```src/WebApi/Common/Extensions/SwaggerServices/SwaggerService
 ## Future Releases
 - Authnetication and Authorization using Identity
 - [Versioning API](https://www.infoworld.com/article/3562355/how-to-use-api-versioning-in-aspnet-core.html)
-- Static analysis code using [SonarQube](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/)
+- Static analysis code using [SonarQube and StyleCop](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/](https://www.youtube.com/watch?v=0nVT1gM4vPg)
