@@ -13,7 +13,6 @@
       <Folder Include="Common\Helpers" />
       <Folder Include="Common\Resources" />
       <Folder Include="Files" />
-      <Folder Include="Identity" />
     </ItemGroup>
 
     <ItemGroup>

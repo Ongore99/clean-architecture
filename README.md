@@ -1,3 +1,7 @@
+# Objectives of template
+- Descrease time for development and initial setup for common use cases.
+- Easy to configure each installed library in the template
+- Ready convention for solution structure
 # Architecture
 The Projects tries to follow clean architecture with CQRS pattern. CQRS is done using Mediatr library. Here is digram of architecture: <br> <br>
 ![Clean-Architecture-Diagram2](https://user-images.githubusercontent.com/31799470/189880565-38ff27a4-fbb2-4e4c-8d8b-b5c108c29a05.png)
@@ -349,5 +353,5 @@ Configs are here: ```src/WebApi/Common/Extensions/SwaggerServices/SwaggerService
 
 ## Future Releases
 - Authnetication and Authorization using Identity
-- [Versioning API](https://www.infoworld.com/article/3562355/how-to-use-api-versioning-in-aspnet-core.html)
-- Static analysis code using [SonarQube](https://docs.sonarqube.org/latest/analysis/scan/sonarscanner-for-msbuild/)
+- [Versioning API](https://www.infoworld.com/article/3562355/how-to-use-api-versioning-in-aspnet-core.html) (Done)
+- Static analysis code using [SonarQube and StyleCop](https://www.youtube.com/watch?v=0nVT1gM4vPg)
