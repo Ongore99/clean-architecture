@@ -43,13 +43,13 @@ public static class WebApplicationBuilderExtension
     internal static async Task ConfigureApp(this WebApplicationBuilder builder)
     {
         var app = builder.Build();
-        var configuration = builder.Configuration;
 
         app.UseErrorHandling();
         if (builder.Environment.IsDevelopment())
         {
             app.UseSwaggerUi();
         }
+
         app.UseRouting();
         app.UseLocalization();
         app.UseHttpsRedirection();

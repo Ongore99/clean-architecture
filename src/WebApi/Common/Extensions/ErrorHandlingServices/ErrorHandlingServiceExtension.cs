@@ -22,21 +22,21 @@ public static class ErrorHandlingServiceExtension
                 logger.Error($"Exception occured:\n{pr.Title}\n{pr.Detail}");
                 logger.Error(pr.Instance);
             };
-            
-            opt.MapToStatusCode<NotFoundException>((int) HttpStatusCode.NotFound);
+
+            opt.MapToStatusCode<NotFoundException>((int)HttpStatusCode.NotFound);
             opt.Map<ValidationException>(x => x.ToValidationProblemDetails());
-            opt.MapToStatusCode<AuthenticationCustomException>((int) HttpStatusCode.Unauthorized);
-            opt.MapToStatusCode<AuthorizationException>((int) HttpStatusCode.Forbidden);
+            opt.MapToStatusCode<AuthenticationCustomException>((int)HttpStatusCode.Unauthorized);
+            opt.MapToStatusCode<AuthorizationException>((int)HttpStatusCode.Forbidden);
             opt.Map<DomainException>(ex => new CustomProblemDetails()
             {
                 Title = ex.Message,
-                Status = (int) HttpStatusCode.BadRequest,
+                Status = (int)HttpStatusCode.BadRequest,
                 Type = "https://httpstatuses.io/400",
                 Code = ex.Code
             });
         });
     }
-    
+
     internal static void UseErrorHandling(this IApplicationBuilder app)
     {
         app.UseProblemDetails();

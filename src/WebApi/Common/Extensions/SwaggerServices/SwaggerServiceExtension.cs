@@ -40,7 +40,8 @@ public static class SwaggerServiceExtension
         {
             foreach (var description in apiVersionDescriptionProvider.ApiVersionDescriptions.Reverse())
             {
-                x.SwaggerEndpoint($"/swagger/{description.GroupName}/swagger.json",
+                x.SwaggerEndpoint(
+                    $"/swagger/{description.GroupName}/swagger.json",
                     description.GroupName.ToUpperInvariant());
             }
             x.DefaultModelExpandDepth(3);
