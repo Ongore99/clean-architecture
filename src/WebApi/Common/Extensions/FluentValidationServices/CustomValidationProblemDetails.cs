@@ -5,7 +5,7 @@ namespace WebApi.Common.Extensions.FluentValidationServices;
 
 public class CustomValidationProblemDetails : ProblemDetails
 {
-    public string Type { get; set; } 
+    public new string Type { get; set; } 
 
     public Dictionary<string, List<CustomFailure>> Errors { get; set; } = new();
 
@@ -22,5 +22,5 @@ public class CustomFailure
 {
     public int? ErrorCode { get; set; }
     
-    public string ErrorMessage { get; set; }
+    public string? ErrorMessage { get; set; }
 }

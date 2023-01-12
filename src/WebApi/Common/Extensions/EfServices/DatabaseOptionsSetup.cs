@@ -1,6 +1,6 @@
-using Microsoft.Extensions.Options;
-
 namespace WebApi.Common.Extensions.EfServices;
+
+using Microsoft.Extensions.Options;
 
 public class DatabaseOptions
 {

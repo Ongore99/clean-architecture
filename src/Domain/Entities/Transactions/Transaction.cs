@@ -19,9 +19,9 @@ public class Transaction : IIdHas<long>
     
     public int TransactionTypeId { get; set; }
     
-    public TransactionStatus TransactionStatus { get; set; }
+    public TransactionStatus? TransactionStatus { get; set; }
     
-    public TransactionType TransactionType { get; set; }
+    public TransactionType? TransactionType { get; set; }
     
-    public Account Account { get; set; }
+    public Account? Account { get; set; }
 }

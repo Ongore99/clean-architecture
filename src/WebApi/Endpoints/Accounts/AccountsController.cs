@@ -54,7 +54,7 @@ public class AccountController : BaseController
         
         return Ok(result);
     }
-    
+
     /// <summary>
     /// Withdraw from my account
     /// </summary>
@@ -71,7 +71,9 @@ public class AccountController : BaseController
     public async Task<ActionResult<Account>> Withdraw(
         [FromBody] WithdrawRequestDto dto,
         [FromRoute] [DefaultValue(1)] int accountId,
+#pragma warning disable CS1573
         [FromServices] IValidator<WithdrawRequestDto> validator)
+#pragma warning restore CS1573
     {
         dto.AccountId = accountId;
         
@@ -104,7 +106,9 @@ public class AccountController : BaseController
     public async Task<ActionResult<HttpStatusCode>> Transfer(
         [FromBody] TransferRequestDto dto,
         [FromRoute] int accountId,
+#pragma warning disable CS1573
         [FromServices] IValidator<TransferRequestDto> validator)
+#pragma warning restore CS1573
     {
         dto.AccountSenderId = accountId;
         

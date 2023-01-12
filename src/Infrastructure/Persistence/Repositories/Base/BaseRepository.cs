@@ -86,8 +86,8 @@ public class  BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity :
     }
 
     public async Task<IQueryable<TD>> GetAll<TE, TD>(
-        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null,
-        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null, bool disableTracking = true,
+        Func<IQueryable<TEntity>, IOrderedQueryable<TEntity>> orderBy = null!,
+        Func<IQueryable<TEntity>, IIncludableQueryable<TEntity, object>> include = null!, bool disableTracking = true,
         bool ignoreQueryFilters = false) where TD : class
         => (await GetAllAsync(orderBy, include, disableTracking, ignoreQueryFilters)).ProjectToType<TD>();
 
@@ -193,7 +193,7 @@ public class  BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity :
 
         if (orderBy != null)
         {
-            return await orderBy(query).FirstOrDefaultAsync();
+            return (await orderBy(query).FirstOrDefaultAsync())!;
         }
         else
         {

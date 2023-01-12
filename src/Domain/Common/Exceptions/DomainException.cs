@@ -8,6 +8,7 @@ public abstract class DomainException : Exception
 
     public DomainException(string message, int code) : base(message)
     {
+        Message = message;
         Code = code;
         Data.Add("Code", code);
     }

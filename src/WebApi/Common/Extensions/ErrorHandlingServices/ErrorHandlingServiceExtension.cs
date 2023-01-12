@@ -1,12 +1,11 @@
+namespace WebApi.Common.Extensions.ErrorHandlingServices;
+
 using System.Net;
 using Domain.Common.Exceptions;
 using FluentValidation;
 using Hellang.Middleware.ProblemDetails;
-using Microsoft.AspNetCore.Mvc;
 using Serilog.Core;
 using WebApi.Common.Extensions.FluentValidationServices;
-
-namespace WebApi.Common.Extensions.ErrorHandlingServices;
 
 public static class ErrorHandlingServiceExtension
 {

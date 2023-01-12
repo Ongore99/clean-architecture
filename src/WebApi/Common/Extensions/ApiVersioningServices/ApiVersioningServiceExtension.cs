@@ -1,7 +1,7 @@
+namespace WebApi.Common.Extensions.ApiVersioningServices;
+
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Versioning;
-
-namespace WebApi.Common.Extensions.ApiVersioningServices;
 
 public static class ApiVersioningServiceExtension
 {
@@ -16,7 +16,6 @@ public static class ApiVersioningServiceExtension
                 new HeaderApiVersionReader("x-api-version"),
                 new MediaTypeApiVersionReader("x-api-version"));
         });
-        
         services.AddVersionedApiExplorer(setup =>
         {
             setup.GroupNameFormat = "'v'VVV";

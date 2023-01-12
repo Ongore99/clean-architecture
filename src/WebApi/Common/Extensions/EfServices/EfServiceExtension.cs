@@ -1,9 +1,9 @@
-﻿using Infrastructure.Persistence;
+﻿namespace WebApi.Common.Extensions.EfServices;
+
+using Infrastructure.Persistence;
 using Infrastructure.Persistence.Seed;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
-
-namespace WebApi.Common.Extensions.EfServices;
 
 public static class EfServiceExtension
 {

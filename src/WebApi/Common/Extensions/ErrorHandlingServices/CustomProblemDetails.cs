@@ -1,6 +1,6 @@
-using Microsoft.AspNetCore.Mvc;
-
 namespace WebApi.Common.Extensions.ErrorHandlingServices;
+
+using Microsoft.AspNetCore.Mvc;
 
 public class CustomProblemDetails : ProblemDetails
 { 

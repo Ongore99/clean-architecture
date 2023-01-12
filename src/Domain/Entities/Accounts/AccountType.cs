@@ -10,8 +10,6 @@ public class AccountType : EnumTable<AccountTypeEnum>
     public AccountType(AccountTypeEnum enumType) : base(enumType)
     {
     }
-
-    public AccountType() : base() { }
 }
 
 public enum AccountTypeEnum : int

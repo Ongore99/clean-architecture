@@ -12,7 +12,6 @@ public class GridifyOptionsSetup : IConfigureOptions<DatabaseOptions>
     {
         _configuration = configuration;
     }
-
     
     public void Configure(DatabaseOptions options)
     {

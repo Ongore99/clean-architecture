@@ -13,10 +13,10 @@ public class EnumTable<TEnum>: IIdHas<int>
     public int Id { get; set; }
     
     [Required, MaxLength(128)]
-    public string Name { get; set; }
+    public string? Name { get; set; }
     
     [MaxLength(128)]
-    public string DisplayName { get; set; }
+    public string? DisplayName { get; set; }
     
     protected EnumTable() { }
 
